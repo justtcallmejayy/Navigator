@@ -1,73 +1,108 @@
-# React + TypeScript + Vite
+# Film Theory Navigator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Film Theory Navigator is a React app for browsing and studying published film theory entries.
+It provides a searchable theory library, per-theory detail pages, and scaffolding for admin and vocabulary workflows.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Browse a curated library of published theories.
+- Search by title with debounced input.
+- Filter theories by category.
+- Open a detailed view for each theory by slug.
+- Navigate through dedicated routes for Home, Theory Library, Vocabulary, and Admin placeholders.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19 + TypeScript
+- Vite 7
+- React Router 7
+- TanStack Query 5
+- Supabase JavaScript client 2
+- Tailwind CSS 3
+- ESLint + Prettier
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+src/
+  app/
+    layout/
+    queryClient.ts
+    router.tsx
+  components/
+    common/
+    theory/
+    ui/
+  hooks/
+  lib/
+    queries/
+    supabase/
+  pages/
+  styles/
+  types/
+  utils/
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Routes
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `/` Home screen
+- `/theory` Theory Library
+- `/theory/:slug` Theory Detail
+- `/vocabulary` Vocabulary Hub (placeholder)
+- `/admin/login` Admin Login (placeholder)
+- `/admin` Admin Dashboard (placeholder)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting Started
+
+### 1. Install dependencies
+
+```bash
+npm install
 ```
+
+### 2. Configure environment variables
+
+Copy `.env.example` to `.env` and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+Then set:
+
+```bash
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+### 3. Run the app
+
+```bash
+npm run dev
+```
+
+The app starts on the Vite dev server (typically `http://localhost:5173`).
+
+## Available Scripts
+
+- `npm run dev` Start local development server.
+- `npm run build` Type-check and build for production.
+- `npm run preview` Preview the production build locally.
+- `npm run lint` Run ESLint.
+
+## Data Model (Theory)
+
+The app expects a `theories` table in Supabase with fields used by the UI, including:
+
+- `id`, `title`, `slug`, `category`
+- `overview`, `history`
+- `key_points`, `key_thinkers`, `representative_films`, `citations`
+- `status` (`draft` or `published`)
+- `created_at`, `updated_at`
+
+The public library currently reads rows where `status = published`.
+
+## Notes
+
+- Admin and vocabulary screens are currently placeholders.
+- Supabase Row Level Security and policies are documented in `src/lib/supabase/policies.md`.
