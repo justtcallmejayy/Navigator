@@ -43,6 +43,27 @@ src/
   utils/
 ```
 
+```
+Navigator/
+├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.md
+│   │   └── feature_request.md
+│   └── PULL_REQUEST_TEMPLATE.md
+├── docs/
+│   ├── branches/
+│   │   └── TEMPLATE.md          # Template for feature branch docs
+│   ├── ARCHITECTURE.md          # Technical system overview
+│   ├── CONTENT_MANAGEMENT.md    # Guide for Dr. McFarland
+│   ├── GIT_STRATEGY.md          # Team branching rules
+│   ├── PROGRESS.md              # Weekly reporting template
+│   ├── PROGRESS_REPO_CURRENT.md # Current Mar 10 state report
+│   ├── TEAM_WORKFLOW.md         # Internal coordination
+│   ├── TECHNICAL_DEBT.md        # Issues & cleanup tracker
+│   └── USER_GUIDE.md            # Platform overview for the client
+└── README.md                    # Main project entry point
+```
+
 ## Routes
 
 - `/` Home screen
