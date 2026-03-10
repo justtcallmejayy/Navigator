@@ -1,10 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
-import EmptyState from '../components/common/EmptyState';
-import ErrorState from '../components/common/ErrorState';
-import Loading from '../components/common/Loading';
-import TheoryFilters from '../components/theory/TheoryFilters';
-import TheoryGrid from '../components/theory/TheoryGrid';
+import { EmptyState, ErrorState, Loading } from '../components/common';
+import { TheoryFilters, TheoryGrid } from '../components/theory';
 import { useDebounce } from '../hooks/useDebounce';
 import { fetchTheories } from '../lib/queries/theories';
 

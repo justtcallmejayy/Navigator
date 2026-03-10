@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
-import ErrorState from '../components/common/ErrorState';
-import Loading from '../components/common/Loading';
+import { ErrorState, Loading } from '../components/common';
 import { fetchTheoryBySlug } from '../lib/queries/theories';
 
 export default function TheoryDetail() {
