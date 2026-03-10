@@ -1,11 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
+import { AppLayout } from '../components/layout';
 import AdminDashboard from '../pages/AdminDashboard';
 import AdminLogin from '../pages/AdminLogin';
 import Home from '../pages/Home';
 import TheoryDetail from '../pages/TheoryDetail';
 import TheoryLibrary from '../pages/TheoryLibrary';
 import VocabularyHub from '../pages/VocabularyHub';
-import AppLayout from './layout/AppLayout';
 
 export const router = createBrowserRouter([
   {
