@@ -1,0 +1,17 @@
+:root {
+  --bg: 12 12 14;
+  --surface: 18 18 22;
+  --text: 245 245 246;
+  --accent: 229 9 20;
+  --border: 255 255 255;
+  --shadow: 229 9 20;
+  --muted: 160 160 170;
+}
+
+$bg: rgb(var(--bg));
+$surface: rgb(var(--surface));
+$text: rgb(var(--text));
+$accent: rgb(var(--accent));
+$border: rgb(var(--border));
+$shadow: rgba(var(--shadow), 0.15);
+$muted: rgb(var(--muted));

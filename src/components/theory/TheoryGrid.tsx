@@ -1,5 +1,6 @@
 import type { Theory } from '../../types/theory';
 import TheoryCard from './TheoryCard';
+import styles from './TheoryGrid.module.scss';
 
 type TheoryGridProps = {
   items: Theory[];
@@ -7,7 +8,7 @@ type TheoryGridProps = {
 
 export default function TheoryGrid({ items }: TheoryGridProps) {
   return (
-    <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className={styles.grid}>
       {items.map((item) => (
         <TheoryCard key={item.id} item={item} />
       ))}

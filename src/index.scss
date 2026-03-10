@@ -1,14 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --bg: 12 12 14;
-  --panel: 18 18 22;
-  --text: 245 245 246;
-  --muted: 160 160 170;
-  --accent: 229 9 20;
-}
+@use './styles/variables';
 
 * {
   box-sizing: border-box;

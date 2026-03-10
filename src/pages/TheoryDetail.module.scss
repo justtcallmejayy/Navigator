@@ -1,0 +1,39 @@
+.article {
+  display: grid;
+  gap: 1.25rem;
+  border: 1px solid rgba(var(--border), 0.1);
+  border-radius: 1rem;
+  background: rgb(var(--surface));
+  padding: 1.5rem;
+}
+
+.backLink {
+  font-size: 0.875rem;
+  color: rgba(var(--text), 0.7);
+  text-decoration: none;
+}
+
+.backLink:hover {
+  color: rgb(var(--text));
+}
+
+.title {
+  margin: 0;
+  font-family: ui-serif, Georgia, serif;
+  font-size: 1.875rem;
+}
+
+.overview {
+  margin: 0;
+  color: rgba(var(--text), 0.75);
+}
+
+.historyTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.historyText {
+  margin: 0;
+  color: rgba(var(--text), 0.75);
+}

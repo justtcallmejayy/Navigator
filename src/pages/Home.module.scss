@@ -1,0 +1,43 @@
+.hero {
+  border: 1px solid rgba(var(--border), 0.1);
+  border-radius: 1rem;
+  background: rgb(var(--surface));
+  padding: 2rem;
+  box-shadow: 0 0 30px rgba(var(--shadow), 0.15);
+}
+
+.kicker {
+  margin: 0;
+  font-size: 0.875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgb(var(--muted));
+}
+
+.title {
+  margin: 0.75rem 0 0;
+  font-family: ui-serif, Georgia, serif;
+  font-size: clamp(2rem, 4vw, 2.25rem);
+}
+
+.body {
+  margin: 1rem 0 0;
+  max-width: 42rem;
+  color: rgba(var(--text), 0.8);
+}
+
+.cta {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  border-radius: 0.375rem;
+  background: rgb(var(--accent));
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  color: rgb(var(--text));
+  text-decoration: none;
+  transition: filter 150ms ease;
+}
+
+.cta:hover {
+  filter: brightness(1.1);
+}
