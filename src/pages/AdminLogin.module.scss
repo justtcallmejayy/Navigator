@@ -1,0 +1,15 @@
+.page {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.title {
+  margin: 0;
+  font-family: ui-serif, Georgia, serif;
+  font-size: 1.875rem;
+}
+
+.subtitle {
+  margin: 0;
+  color: rgba(var(--text), 0.75);
+}

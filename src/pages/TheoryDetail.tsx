@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
 import { ErrorState, Loading } from '../components/common';
 import { fetchTheoryBySlug } from '../lib/queries/theories';
+import styles from './TheoryDetail.module.scss';
 
 export default function TheoryDetail() {
   const { slug = '' } = useParams();
@@ -16,16 +17,16 @@ export default function TheoryDetail() {
   if (!data) return <ErrorState message="Theory not found." />;
 
   return (
-    <article className="space-y-5 rounded-2xl border border-white/10 bg-[rgb(var(--panel))] p-6">
-      <Link to="/theory" className="text-sm text-white/70 hover:text-white">
+    <article className={styles.article}>
+      <Link to="/theory" className={styles.backLink}>
         Back to library
       </Link>
-      <h1 className="font-display text-3xl">{data.title}</h1>
-      <p className="text-white/75">{data.overview}</p>
+      <h1 className={styles.title}>{data.title}</h1>
+      <p className={styles.overview}>{data.overview}</p>
       {data.history && (
         <section>
-          <h2 className="mb-2 text-xl">History</h2>
-          <p className="text-white/75">{data.history}</p>
+          <h2 className={styles.historyTitle}>History</h2>
+          <p className={styles.historyText}>{data.history}</p>
         </section>
       )}
     </article>
