@@ -1,11 +1,31 @@
 :root {
-  --bg: 12 12 14;
-  --surface: 18 18 22;
-  --text: 245 245 246;
-  --accent: 229 9 20;
-  --border: 255 255 255;
-  --shadow: 229 9 20;
-  --muted: 160 160 170;
+  --bg-1: 244 247 252;
+  --bg-2: 234 239 248;
+  --panel: 255 255 255;
+  --panel-2: 248 251 255;
+  --border: 214 223 237;
+
+  --text: 17 24 39;
+  --muted: 107 114 128;
+
+  --primary: 36 99 235;
+  --primary-hover: 29 78 216;
+  --primary-2: 130 157 239;
+
+  --accent: 245 158 11;
+  --accent-2: 225 123 16;
+
+  --warn: 238 122 65;
+  --warn-hover: 220 108 52;
+  --warn-2: 253 184 112;
+
+  --text-soft: var(--muted);
+
+  /* Compatibility aliases for existing styles */
+  --bg: var(--bg-1);
+  --surface: var(--panel);
+  --surface-elevated: var(--panel-2);
+  --shadow: var(--primary);
 }
 
 $bg: rgb(var(--bg));
