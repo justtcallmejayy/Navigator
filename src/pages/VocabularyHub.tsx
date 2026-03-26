@@ -6,6 +6,7 @@ export default function VocabularyHub() {
   const [terms, setTerms] = useState<VocabularyTerm[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [difficulty, setDifficulty] = useState('all');
 
   useEffect(() => {
     async function loadTerms() {
@@ -34,16 +35,33 @@ export default function VocabularyHub() {
         className={styles.search}
       />
 
+      <select
+        value={difficulty}
+        onChange={(e) => setDifficulty(e.target.value)}
+        className={styles.filter}
+      >
+        <option value="all">All Levels</option>
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+      </select>
+
       {loading && <p>Loading...</p>}
 
       {!loading && terms.length === 0 && <p>No vocabulary terms found.</p>}
 
       <div className={styles.list}>
         {terms
-          .filter((term) =>
-            term.term.toLowerCase().includes(search.toLowerCase()) ||
-            term.definition.toLowerCase().includes(search.toLowerCase())
-          )
+          .filter((term) => {
+            const matchesSearch =
+              term.term.toLowerCase().includes(search.toLowerCase()) ||
+              term.definition.toLowerCase().includes(search.toLowerCase());
+
+            const matchesDifficulty =
+              difficulty === 'all' || term.difficulty?.toLowerCase() === difficulty;
+
+            return matchesSearch && matchesDifficulty;
+          })
           .map((term) => (
             <div key={term.id} className={styles.card}>
               <h3 className={styles.term}>{term.term}</h3>
