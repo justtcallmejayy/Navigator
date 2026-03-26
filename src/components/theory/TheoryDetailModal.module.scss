@@ -69,6 +69,18 @@
   gap: 2rem;
 }
 
+.sectionHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.3rem;
+}
+
+.sectionHeading svg {
+  color: rgb(var(--text));
+  flex-shrink: 0;
+}
+
 .sectionTitle {
   margin: 0;
   font-size: 1.1rem;

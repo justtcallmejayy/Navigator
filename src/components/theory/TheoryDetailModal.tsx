@@ -4,6 +4,14 @@ import { fetchTheoryCitations } from '../../lib/queries/theories';
 import type { Theory } from '../../types/theory';
 import styles from './TheoryDetailModal.module.scss';
 
+import {
+  BookOpen,
+  CalendarDays,
+  Users,
+  Film,
+  Quote,
+} from "lucide-react";
+
 type TheoryDetailModalProps = {
   item: Theory;
   onClose: () => void;
@@ -34,6 +42,7 @@ export default function TheoryDetailModal({ item, onClose }: TheoryDetailModalPr
   return (
     <div className={styles.overlay} role="dialog" aria-modal="true">
       <div className={styles.modal}>
+
         {/* HEADER */}
         <header className={styles.header}>
           <div className={styles.titleBlock}>
@@ -48,14 +57,22 @@ export default function TheoryDetailModal({ item, onClose }: TheoryDetailModalPr
 
         {/* CONTENT */}
         <div className={styles.content}>
+
           {/* LEFT SIDE */}
           <section className={styles.primaryCol}>
-            <h3 className={styles.sectionTitle}>Overview</h3>
+            
+            <div className={styles.sectionHeading}>
+              <BookOpen size={20} strokeWidth={2.2} />
+              <h3 className={styles.sectionTitle}>Overview</h3>
+            </div>
             <p className={styles.paragraph}>
               {item.description ?? 'No overview yet.'}
             </p>
 
-            <h3 className={styles.sectionTitle}>Historical Context</h3>
+            <div className={styles.sectionHeading}>
+              <CalendarDays size={20} strokeWidth={2.2} />
+              <h3 className={styles.sectionTitle}>Historical Context</h3>
+            </div>
             <p className={styles.paragraph}>
               {item.history ?? 'Historical context not available yet.'}
             </p>
@@ -74,9 +91,14 @@ export default function TheoryDetailModal({ item, onClose }: TheoryDetailModalPr
 
           {/* RIGHT SIDE */}
           <aside className={styles.sideCol}>
+
             {(item.key_thinkers ?? []).length > 0 && (
               <section>
-                <h3 className={styles.sectionTitle}>Key Thinkers</h3>
+                <div className={styles.sectionHeading}>
+                  <Users size={20} strokeWidth={2.2} />
+                  <h3 className={styles.sectionTitle}>Key Thinkers</h3>
+                </div>
+
                 <div className={styles.pills}>
                   {(item.key_thinkers ?? []).map((t: string) => (
                     <button
@@ -95,7 +117,11 @@ export default function TheoryDetailModal({ item, onClose }: TheoryDetailModalPr
 
             {filmItems.length > 0 && (
               <section>
-                <h3 className={styles.sectionTitle}>Representative Films</h3>
+                <div className={styles.sectionHeading}>
+                  <Film size={20} strokeWidth={2.2} />
+                  <h3 className={styles.sectionTitle}>Representative Films</h3>
+                </div>
+
                 <div className={styles.filmList}>
                   {filmItems.map((film) => (
                     <article key={film.title} className={styles.filmCard}>
@@ -116,7 +142,11 @@ export default function TheoryDetailModal({ item, onClose }: TheoryDetailModalPr
 
             {citationItems.length > 0 && (
               <section>
-                <h3 className={styles.sectionTitle}>Key Citations</h3>
+                <div className={styles.sectionHeading}>
+                  <Quote size={20} strokeWidth={2.2} />
+                  <h3 className={styles.sectionTitle}>Key Citations</h3>
+                </div>
+
                 <div className={styles.citationList}>
                   {citationItems.map((citation) => (
                     <blockquote key={citation.id} className={styles.citationCard}>
@@ -140,6 +170,7 @@ export default function TheoryDetailModal({ item, onClose }: TheoryDetailModalPr
                 </div>
               </section>
             )}
+
           </aside>
         </div>
 
