@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styles from './VocabularyHub.module.scss';
 import { fetchVocabularyTerms, type VocabularyTerm } from '../lib/queries/vocabulary';
 
@@ -52,28 +52,92 @@ export default function VocabularyHub() {
     return matchesSearch && matchesDifficulty;
   });
 
+  const featuredTerms = useMemo(() => {
+    return terms.filter((term) => term.featured).slice(0, 3);
+  }, [terms]);
+
+  const termOfTheDay = useMemo(() => {
+    return featuredTerms[0] ?? terms[0] ?? null;
+  }, [featuredTerms, terms]);
+
   return (
     <section className={styles.page}>
-      <h1 className={styles.title}>Vocabulary Hub</h1>
+      <div className={styles.hero}>
+        <h1 className={styles.heroTitle}>Film Theory Vocabulary</h1>
+        <p className={styles.heroText}>
+          Master the language of film theory with our vocabulary library. Explore key
+          concepts, build stronger critical vocabulary, and connect related ideas.
+        </p>
+        <p className={styles.heroMeta}>
+          {terms.length} terms • Beginner to Advanced • Cross-referenced
+        </p>
+      </div>
 
-      <input
-        type="text"
-        placeholder="Search terms, definitions, or concepts..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className={styles.search}
-      />
+      <div className={styles.topGrid}>
+        {termOfTheDay && (
+          <aside className={styles.termOfDay}>
+            <p className={styles.termOfDayLabel}>Term of the Day</p>
+            <h2 className={styles.termOfDayTitle}>{termOfTheDay.term}</h2>
+            <p className={styles.termOfDayText}>
+              {truncateText(termOfTheDay.definition, 150)}
+            </p>
+            <button
+              type="button"
+              className={styles.learnMoreButton}
+              onClick={() => setSelectedTerm(termOfTheDay)}
+            >
+              Learn More
+            </button>
+          </aside>
+        )}
 
-      <select
-        value={difficulty}
-        onChange={(e) => setDifficulty(e.target.value)}
-        className={styles.filter}
-      >
-        <option value="all">All Levels</option>
-        <option value="beginner">Beginner</option>
-        <option value="intermediate">Intermediate</option>
-        <option value="advanced">Advanced</option>
-      </select>
+        <div className={styles.featuredBlock}>
+          <h2 className={styles.featuredTitle}>Featured Terms</h2>
+
+          <div className={styles.featuredList}>
+            {featuredTerms.map((term) => (
+              <button
+                key={term.id}
+                type="button"
+                className={styles.featuredCard}
+                onClick={() => setSelectedTerm(term)}
+              >
+                <span
+                  className={`${styles.badge} ${styles[getDifficultyClass(term.difficulty)]}`}
+                >
+                  {term.difficulty || 'general'}
+                </span>
+
+                <h3 className={styles.featuredCardTitle}>{term.term}</h3>
+                <p className={styles.featuredCardText}>
+                  {truncateText(term.definition, 90)}
+                </p>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.controls}>
+        <input
+          type="text"
+          placeholder="Search terms, definitions, or concepts..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className={styles.search}
+        />
+
+        <select
+          value={difficulty}
+          onChange={(e) => setDifficulty(e.target.value)}
+          className={styles.filter}
+        >
+          <option value="all">All Levels</option>
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+      </div>
 
       {loading && <p>Loading...</p>}
 
