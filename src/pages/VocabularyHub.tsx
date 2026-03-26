@@ -5,6 +5,7 @@ import { fetchVocabularyTerms, type VocabularyTerm } from '../lib/queries/vocabu
 export default function VocabularyHub() {
   const [terms, setTerms] = useState<VocabularyTerm[]>([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     async function loadTerms() {
@@ -25,19 +26,32 @@ export default function VocabularyHub() {
     <section className={styles.page}>
       <h1 className={styles.title}>Vocabulary Hub</h1>
 
+      <input
+        type="text"
+        placeholder="Search terms..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className={styles.search}
+      />
+
       {loading && <p>Loading...</p>}
 
       {!loading && terms.length === 0 && <p>No vocabulary terms found.</p>}
 
       <div className={styles.list}>
-        {terms.map((term) => (
-          <div key={term.id} className={styles.card}>
-            <h3 className={styles.term}>{term.term}</h3>
-            <p className={styles.definition}>{term.definition}</p>
-            {term.difficulty && (
-              <span className={styles.difficulty}>{term.difficulty}</span>
-            )}
-          </div>
+        {terms
+          .filter((term) =>
+            term.term.toLowerCase().includes(search.toLowerCase()) ||
+            term.definition.toLowerCase().includes(search.toLowerCase())
+          )
+          .map((term) => (
+            <div key={term.id} className={styles.card}>
+              <h3 className={styles.term}>{term.term}</h3>
+              <p className={styles.definition}>{term.definition}</p>
+              {term.difficulty && (
+                <span className={styles.difficulty}>{term.difficulty}</span>
+              )}
+            </div>
         ))}
       </div>
     </section>
