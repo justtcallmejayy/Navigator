@@ -6,6 +6,7 @@ import Home from '../pages/Home';
 import TheoryDetail from '../pages/TheoryDetail';
 import TheoryLibrary from '../pages/TheoryLibrary';
 import VocabularyHub from '../pages/VocabularyHub';
+import AnalysisToolkit from '../pages/AnalysisToolkit'; 
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +16,9 @@ export const router = createBrowserRouter([
       { path: '/theory', element: <TheoryLibrary /> },
       { path: '/theory/:slug', element: <TheoryDetail /> },
       { path: '/vocabulary', element: <VocabularyHub /> },
+
+      { path: '/analysis', element: <AnalysisToolkit /> },
+
       { path: '/admin/login', element: <AdminLogin /> },
       { path: '/admin', element: <AdminDashboard /> },
     ],
