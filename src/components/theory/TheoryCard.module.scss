@@ -1,31 +1,28 @@
 .card {
   display: grid;
   gap: 0.75rem;
-
   border: 1px solid rgba(var(--border), 1);
   border-radius: 1rem;
-
   background: rgb(var(--surface));
-
-  /* default soft shadow */
-  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.08);
-
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 6px 16px rgba(0, 0, 0, 0.06);
   padding: 1.2rem 1.2rem 0.85rem;
   min-height: 19.5rem;
-
   cursor: pointer;
-
-  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+  transition:
+    border-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* HOVER STATE */
 .card:hover {
-  border-color: rgb(var(--primary)); /* 👈 1px blue border */
-
-  /* 👇 gray shadow (clean + modern) */
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
-
-  transform: translateY(-2px);
+  border-color: rgb(var(--primary));
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.06),
+    0 12px 28px rgba(0, 0, 0, 0.10),
+    0 24px 48px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px) scale(1.01);
 }
 
 .card:active {
@@ -37,14 +34,12 @@
   outline-offset: 3px;
 }
 
-/* HEADER */
 .headerRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-/* DOT COLORS */
 .dot {
   width: 1.1rem;
   height: 1.1rem;
@@ -58,7 +53,6 @@
 .dotRed { background: #ef4444; }
 .dotSky { background: #0ea5e9; }
 
-/* TEXT */
 .title {
   margin: 0;
   font-size: 1.8rem;
@@ -67,7 +61,6 @@
   transition: color 150ms ease;
 }
 
-/* 👇 Title turns blue */
 .card:hover .title {
   color: rgb(var(--primary));
 }
@@ -88,7 +81,6 @@
   color: rgba(var(--text), 0.8);
 }
 
-/* META */
 .metaList {
   display: grid;
   gap: 0.45rem;
@@ -103,13 +95,11 @@
   color: rgba(var(--text), 0.66);
 }
 
-/* ICON */
 .metaIcon {
   font-size: 0.9rem;
   line-height: 1;
 }
 
-/* LEARN MORE */
 .learnMore {
   margin-top: auto;
   border-top: 1px solid rgba(var(--border), 0.9);
@@ -119,14 +109,12 @@
   font-weight: 700;
   padding: 0.75rem 0 0.2rem;
   text-align: center;
-
   pointer-events: none;
   transition: background 150ms ease, color 150ms ease;
 }
 
-/* 👇 Blue hover section */
 .card:hover .learnMore {
-  background: rgba(var(--primary), 0.12);
+  background: rgba(var(--primary), 0.10);
   color: rgb(var(--primary));
   border-radius: 0 0 1rem 1rem;
 }

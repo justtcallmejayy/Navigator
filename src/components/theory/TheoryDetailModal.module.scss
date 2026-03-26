@@ -13,6 +13,9 @@
   max-height: 95vh;
   overflow: auto;
   background: rgb(var(--surface));
+  border-radius: 1rem;
+  border: 1px solid rgba(var(--border), 1);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
 }
 
 /* HEADER */
@@ -89,33 +92,34 @@
   color: rgb(var(--primary));
 }
 
+/* PILLS */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
 .pill {
   background: rgb(var(--panel-2));
   border-radius: 999px;
   padding: 0.4rem 0.8rem;
   font-size: 0.85rem;
-
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
-
-  /* Remove default button styles */
   outline: none;
 }
 
-/* HOVER EFFECT */
 .pill:hover {
   background: rgb(var(--primary));
   color: white;
   transform: translateY(-1px);
 }
 
-/* CLICK FEEDBACK */
 .pill:active {
   transform: scale(0.95);
 }
 
-/* ACCESSIBILITY (keyboard focus) */
 .pill:focus-visible {
   outline: 2px solid rgb(var(--primary));
   outline-offset: 2px;
@@ -134,6 +138,18 @@
   padding: 0.6rem;
   background: rgb(var(--panel-2));
   border-radius: 0.6rem;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.filmCard:hover {
+  transform: translateY(-2px);
+  background: rgba(var(--primary), 0.08);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+}
+
+.filmCard:active {
+  transform: scale(0.98);
 }
 
 .filmImage {
