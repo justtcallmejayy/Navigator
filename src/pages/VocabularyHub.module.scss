@@ -60,6 +60,39 @@
   color: #cbd5f5;
 }
 
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.tag,
+.tagMuted {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.tag {
+  background: rgba(167, 139, 250, 0.18);
+  color: #ddd6fe;
+}
+
+.tagMuted {
+  background: rgba(148, 163, 184, 0.2);
+  color: #cbd5e1;
+}
+
+.related {
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #cbd5e1;
+}
+
 .difficulty {
   display: inline-block;
   margin-top: 8px;

@@ -71,7 +71,29 @@ export default function VocabularyHub() {
         {filteredTerms.map((term) => (
           <div key={term.id} className={styles.card}>
             <h3 className={styles.term}>{term.term}</h3>
+
             <p className={styles.definition}>{term.definition}</p>
+
+            {term.tags.length > 0 && (
+              <div className={styles.tags}>
+                {term.tags.slice(0, 2).map((tag) => (
+                  <span key={tag} className={styles.tag}>
+                    {tag}
+                  </span>
+                ))}
+                {term.tags.length > 2 && (
+                  <span className={styles.tagMuted}>+{term.tags.length - 2}</span>
+                )}
+              </div>
+            )}
+
+            {term.related_terms.length > 0 && (
+              <p className={styles.related}>
+                Related: {term.related_terms.slice(0, 2).join(', ')}
+                {term.related_terms.length > 2 ? '...' : ''}
+              </p>
+            )}
+
             {term.difficulty && (
               <span className={styles.difficulty}>{term.difficulty}</span>
             )}
