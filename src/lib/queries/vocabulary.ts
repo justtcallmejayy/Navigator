@@ -45,3 +45,50 @@ function toVocabularyTerm(row: VocabularyRow): VocabularyTerm {
     updated_at: row.updated_at,
   };
 }
+
+export async function fetchVocabularyTerms(params?: {
+  q?: string;
+  difficulty?: string;
+  sort?: 'az' | 'za';
+}): Promise<VocabularyTerm[]> {
+  let query = supabase
+    .from('vocabulary_terms')
+    .select('*')
+    .eq('status', 'published');
+
+  if (params?.difficulty && params.difficulty !== 'all') {
+    query = query.eq('difficulty', params.difficulty);
+  }
+
+  if (params?.q) {
+    const search = params.q.trim();
+
+    if (search) {
+      query = query.or(
+        `term.ilike.%${search}%,definition.ilike.%${search}%,etymology.ilike.%${search}%`
+      );
+    }
+  }
+
+  const ascending = params?.sort !== 'za';
+
+  const { data, error } = await query.order('term', { ascending });
+
+  if (error) throw error;
+
+  return (data ?? []).map((row) => toVocabularyTerm(row as VocabularyRow));
+}
+
+export async function fetchFeaturedVocabularyTerms(): Promise<VocabularyTerm[]> {
+  const { data, error } = await supabase
+    .from('vocabulary_terms')
+    .select('*')
+    .eq('status', 'published')
+    .eq('featured', true)
+    .order('term')
+    .limit(3);
+
+  if (error) throw error;
+
+  return (data ?? []).map((row) => toVocabularyTerm(row as VocabularyRow));
+}
