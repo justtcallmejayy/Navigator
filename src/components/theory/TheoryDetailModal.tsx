@@ -151,9 +151,6 @@ export default function TheoryDetailModal({ item, onClose }: TheoryDetailModalPr
           <button className={styles.buttonSecondary}>
             Analyze a Film
           </button>
-          <button className={styles.buttonText}>
-            Join Discussion
-          </button>
         </footer>
       </div>
     </div>
