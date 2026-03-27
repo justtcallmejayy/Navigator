@@ -18,6 +18,13 @@ function getTheoryTagClass(index: number) {
   return theoryColors[index % theoryColors.length];
 }
 
+function formatMeta(director: string | null, year: number | null) {
+  if (director && year) return `${director} (${year})`;
+  if (director) return director;
+  if (year) return String(year);
+  return '';
+}
+
 export default function AnalysisToolkit() {
   const [films, setFilms] = useState<Film[]>([]);
   const [loading, setLoading] = useState(true);
@@ -60,8 +67,7 @@ export default function AnalysisToolkit() {
         <header className={styles.hero}>
           <h1 className={styles.title}>Film Analysis Toolkit</h1>
           <p className={styles.subtitle}>
-            Apply theoretical frameworks to analyze films with guided templates and
-            reading recommendations.
+            Apply theoretical frameworks to analyze films with guided templates and reading recommendations.
           </p>
           <p className={styles.subtitleSecondary}>
             Choose a film and theoretical approach to begin your analysis.
@@ -103,11 +109,9 @@ export default function AnalysisToolkit() {
 
                     <div className={styles.cardHeading}>
                       <h2 className={styles.cardTitle}>{film.title}</h2>
-                      <p className={styles.meta}>
-                        {film.director || film.year
-                          ? [film.director, film.year].filter(Boolean).join(' ')
-                          : 'Film details unavailable'}
-                      </p>
+                      {formatMeta(film.director, film.year) ? (
+                        <p className={styles.meta}>{formatMeta(film.director, film.year)}</p>
+                      ) : null}
                     </div>
                   </div>
 

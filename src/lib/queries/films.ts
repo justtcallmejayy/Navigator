@@ -35,16 +35,36 @@ function toFilm(row: FilmRow): Film {
   };
 }
 
+function scoreFilm(film: Film): number {
+  let score = 0;
+
+  if (film.relevant_theories && film.relevant_theories.length > 0) score += 10;
+  if (film.poster_url) score += 3;
+  if (film.synopsis) score += 2;
+  if (film.director) score += 1;
+  if (film.year) score += 1;
+
+  return score;
+}
+
 function dedupeFilms(films: Film[]): Film[] {
-  return films.filter(
-    (film, index, self) =>
-      index ===
-      self.findIndex(
-        (item) =>
-          item.title.trim().toLowerCase() === film.title.trim().toLowerCase() &&
-          (item.year ?? null) === (film.year ?? null)
-      )
-  );
+  const filmMap = new Map<string, Film>();
+
+  for (const film of films) {
+    const key = `${film.title.trim().toLowerCase()}__${film.year ?? 'no-year'}`;
+    const existing = filmMap.get(key);
+
+    if (!existing) {
+      filmMap.set(key, film);
+      continue;
+    }
+
+    if (scoreFilm(film) > scoreFilm(existing)) {
+      filmMap.set(key, film);
+    }
+  }
+
+  return Array.from(filmMap.values());
 }
 
 export async function fetchFilms(): Promise<Film[]> {
