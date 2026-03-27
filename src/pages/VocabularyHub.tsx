@@ -157,12 +157,14 @@ export default function VocabularyHub() {
         <input
           type="text"
           placeholder="Search terms, definitions, or concepts..."
+          aria-label="Search vocabulary terms"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className={styles.search}
         />
 
         <select
+          aria-label="Filter by difficulty"
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
           className={styles.filter}
@@ -211,7 +213,7 @@ export default function VocabularyHub() {
                 <div className={styles.tags}>
                   {term.tags.slice(0, 2).map((tag, index) => (
                     <span
-                      key={tag}
+                      key={`${tag}-${index}`}
                       className={`${styles.tag} ${
                         index % 3 === 0
                           ? styles.categoryPurple
@@ -319,7 +321,7 @@ export default function VocabularyHub() {
                   <h3>Related Theories</h3>
                   <div className={styles.modalTheoryGrid}>
                     {selectedTerm.related_theories.map((theory, index) => (
-                      <div key={theory} className={styles.modalTheoryCard}>
+                      <div key={`${theory}-${index}`} className={styles.modalTheoryCard}>
                         <span
                           className={`${styles.theoryDot} ${
                             index % 3 === 0
@@ -346,8 +348,11 @@ export default function VocabularyHub() {
                 <div className={styles.modalSection}>
                   <h3>Related Terms</h3>
                   <div className={styles.modalPills}>
-                    {selectedTerm.related_terms.map((related) => (
-                      <span key={related} className={styles.modalRelatedPill}>
+                    {selectedTerm.related_terms.map((related, index) => (
+                      <span
+                        key={`${related}-${index}`}
+                        className={styles.modalRelatedPill}
+                      >
                         {related}
                       </span>
                     ))}
