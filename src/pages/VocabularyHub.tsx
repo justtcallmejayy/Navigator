@@ -40,6 +40,47 @@ export default function VocabularyHub() {
     };
   }, [selectedTerm]);
 
+  const termOfTheDay = useMemo(() => {
+    if (terms.length === 0) return null;
+
+    const today = new Date();
+    const dayKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+
+    let total = 0;
+    for (let i = 0; i < dayKey.length; i += 1) {
+      total += dayKey.charCodeAt(i);
+    }
+
+    const index = total % terms.length;
+    return terms[index];
+  }, [terms]);
+
+  const featuredTerms = useMemo(() => {
+    const getFirstByDifficulty = (level: string) =>
+      terms.find(
+        (term) =>
+          term.id !== termOfTheDay?.id &&
+          term.difficulty?.toLowerCase() === level
+      );
+
+    const beginner = getFirstByDifficulty('beginner');
+    const intermediate = getFirstByDifficulty('intermediate');
+    const advanced = getFirstByDifficulty('advanced');
+
+    const selected = [beginner, intermediate, advanced].filter(
+      (term): term is VocabularyTerm => term !== undefined
+    );
+
+    if (selected.length === 3) return selected;
+
+    const usedIds = new Set(selected.map((term) => term.id));
+    if (termOfTheDay) usedIds.add(termOfTheDay.id);
+
+    const extras = terms.filter((term) => !usedIds.has(term.id)).slice(0, 3 - selected.length);
+
+    return [...selected, ...extras];
+  }, [terms, termOfTheDay]);
+
   const filteredTerms = terms.filter((term) => {
     const matchesSearch =
       term.term.toLowerCase().includes(search.toLowerCase()) ||
@@ -51,14 +92,6 @@ export default function VocabularyHub() {
 
     return matchesSearch && matchesDifficulty;
   });
-
-  const featuredTerms = useMemo(() => {
-    return terms.filter((term) => term.featured).slice(0, 3);
-  }, [terms]);
-
-  const termOfTheDay = useMemo(() => {
-    return featuredTerms[0] ?? terms[0] ?? null;
-  }, [featuredTerms, terms]);
 
   return (
     <section className={styles.page}>
