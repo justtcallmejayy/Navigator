@@ -1,29 +1,24 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import styles from './VocabularyHub.module.scss';
 import { fetchVocabularyTerms, type VocabularyTerm } from '../lib/queries/vocabulary';
 
 export default function VocabularyHub() {
   const [terms, setTerms] = useState<VocabularyTerm[]>([]);
-  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [difficulty, setDifficulty] = useState('all');
   const [selectedTerm, setSelectedTerm] = useState<VocabularyTerm | null>(null);
 
-  useEffect(() => {
-    async function loadTerms() {
-      try {
-        const data = await fetchVocabularyTerms();
-        setTerms(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadTerms();
-  }, []);
-
+  const { isLoading: loading, isError, error } = useQuery({
+    queryKey: ['vocabularyTerms'],
+    queryFn: fetchVocabularyTerms,
+    onSuccess: (data) => {
+      setTerms(data);
+    },
+    onError: (err) => {
+      console.error(err);
+    },
+  });
   useEffect(() => {
     function handleEscape(event: KeyboardEvent) {
       if (event.key === 'Escape') {
