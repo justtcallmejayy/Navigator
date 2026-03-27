@@ -4,6 +4,7 @@ import AdminDashboard from '../pages/AdminDashboard';
 import AdminLogin from '../pages/AdminLogin';
 import Home from '../pages/Home';
 import InteractiveLearning from '../pages/InteractiveLearning';
+import QuizPage from '../pages/QuizPage';
 import TheoryDetail from '../pages/TheoryDetail';
 import TheoryLibrary from '../pages/TheoryLibrary';
 import VocabularyHub from '../pages/VocabularyHub';
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
       { path: '/theory/:slug', element: <TheoryDetail /> },
       { path: '/learn', element: <InteractiveLearning /> },
       { path: '/vocabulary', element: <VocabularyHub /> },
+      { path: '/quiz/:theoryId', element: <QuizPage /> },
       { path: '/admin/login', element: <AdminLogin /> },
       { path: '/admin', element: <AdminDashboard /> },
     ],

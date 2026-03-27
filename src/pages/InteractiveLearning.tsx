@@ -31,10 +31,13 @@ export default function InteractiveLearning() {
           </div>
           <h2 className={styles.cardTitle}>Theory Quizzes</h2>
           <p className={styles.cardBody}>
-            Test your understanding with comprehensive quizzes covering all major theoretical frameworks.
+            Test your understanding with comprehensive quizzes covering all major
+            theoretical frameworks.
           </p>
-          <p className={styles.metaPill}>{data.questionCount} questions across {data.theoryCount} theories</p>
-          <Link className={styles.primaryButton} to="/quiz">
+          <p className={styles.metaPill}>
+            {data.questionCount} questions across {data.theoryCount} theories
+          </p>
+          <Link to="/quiz/general" className={styles.primaryButton}>
             Start Quiz
           </Link>
         </article>
@@ -45,9 +48,12 @@ export default function InteractiveLearning() {
           </div>
           <h2 className={styles.cardTitle}>Study Flashcards</h2>
           <p className={styles.cardBody}>
-            Review key terms and concepts with interactive flashcards for quick study sessions.
+            Review key terms and concepts with interactive flashcards for quick
+            study sessions.
           </p>
-          <p className={styles.metaPillBlue}>{data.flashcardCount} cards with definitions and explanations</p>
+          <p className={styles.metaPillBlue}>
+            {data.flashcardCount} cards with definitions and explanations
+          </p>
           <button className={styles.primaryButton} type="button" disabled>
             Study Cards
           </button>
@@ -61,7 +67,9 @@ export default function InteractiveLearning() {
           <p className={styles.cardBody}>
             Engage with theory through interactive games and challenges.
           </p>
-          <p className={styles.metaPillGreen}>{data.gameCount} games with varying difficulty levels</p>
+          <p className={styles.metaPillGreen}>
+            {data.gameCount} games with varying difficulty levels
+          </p>
           <button className={styles.primaryButton} type="button" disabled>
             Play Games
           </button>
