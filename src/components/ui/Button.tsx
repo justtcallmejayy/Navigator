@@ -1,6 +1,6 @@
+import { Loader2 } from 'lucide-react';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import styles from './Button.module.scss';
-import { Loader2 } from 'lucide-react';
 
 type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'danger' | 'ghost';
 type ButtonSize = 'sm' | 'md' | 'lg' | 'icon';
