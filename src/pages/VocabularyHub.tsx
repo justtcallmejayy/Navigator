@@ -1,24 +1,29 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import styles from './VocabularyHub.module.scss';
 import { fetchVocabularyTerms, type VocabularyTerm } from '../lib/queries/vocabulary';
 
 export default function VocabularyHub() {
   const [terms, setTerms] = useState<VocabularyTerm[]>([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [difficulty, setDifficulty] = useState('all');
   const [selectedTerm, setSelectedTerm] = useState<VocabularyTerm | null>(null);
 
-  const { isLoading: loading, isError, error } = useQuery({
-    queryKey: ['vocabularyTerms'],
-    queryFn: fetchVocabularyTerms,
-    onSuccess: (data) => {
-      setTerms(data);
-    },
-    onError: (err) => {
-      console.error(err);
-    },
-  });
+  useEffect(() => {
+    async function loadTerms() {
+      try {
+        const data = await fetchVocabularyTerms();
+        setTerms(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadTerms();
+  }, []);
+
   useEffect(() => {
     function handleEscape(event: KeyboardEvent) {
       if (event.key === 'Escape') {
@@ -157,14 +162,12 @@ export default function VocabularyHub() {
         <input
           type="text"
           placeholder="Search terms, definitions, or concepts..."
-          aria-label="Search vocabulary terms"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className={styles.search}
         />
 
         <select
-          aria-label="Filter by difficulty"
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
           className={styles.filter}
@@ -213,7 +216,7 @@ export default function VocabularyHub() {
                 <div className={styles.tags}>
                   {term.tags.slice(0, 2).map((tag, index) => (
                     <span
-                      key={`${tag}-${index}`}
+                      key={tag}
                       className={`${styles.tag} ${
                         index % 3 === 0
                           ? styles.categoryPurple
@@ -321,7 +324,7 @@ export default function VocabularyHub() {
                   <h3>Related Theories</h3>
                   <div className={styles.modalTheoryGrid}>
                     {selectedTerm.related_theories.map((theory, index) => (
-                      <div key={`${theory}-${index}`} className={styles.modalTheoryCard}>
+                      <div key={theory} className={styles.modalTheoryCard}>
                         <span
                           className={`${styles.theoryDot} ${
                             index % 3 === 0
@@ -348,11 +351,8 @@ export default function VocabularyHub() {
                 <div className={styles.modalSection}>
                   <h3>Related Terms</h3>
                   <div className={styles.modalPills}>
-                    {selectedTerm.related_terms.map((related, index) => (
-                      <span
-                        key={`${related}-${index}`}
-                        className={styles.modalRelatedPill}
-                      >
+                    {selectedTerm.related_terms.map((related) => (
+                      <span key={related} className={styles.modalRelatedPill}>
                         {related}
                       </span>
                     ))}

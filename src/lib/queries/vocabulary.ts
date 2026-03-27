@@ -64,8 +64,10 @@ export async function fetchVocabularyTerms(params?: {
     const search = params.q.trim();
 
     if (search) {
+      // Escape % and _ to prevent SQL injection in LIKE queries
+      const sanitizedSearch = search.replace(/[%_]/g, (m) => '\\' + m);
       query = query.or(
-        `term.ilike.%${search}%,definition.ilike.%${search}%,etymology.ilike.%${search}%`
+        `term.ilike.%${sanitizedSearch}%,definition.ilike.%${sanitizedSearch}%,etymology.ilike.%${sanitizedSearch}%`
       );
     }
   }
