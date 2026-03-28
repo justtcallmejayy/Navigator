@@ -1,187 +1,223 @@
 .page {
     min-height: 100vh;
     background: rgb(var(--background));
-    padding: 2rem 1rem 3rem;
+    padding: 2.6rem 1rem 3.2rem;
   }
   
   .container {
-    width: min(1200px, 100%);
+    width: min(1180px, 100%);
     margin: 0 auto;
   }
   
+  /* BACK BUTTON */
   .backButton {
     border: 0;
     background: transparent;
     color: rgba(var(--text), 0.72);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 700;
     cursor: pointer;
-    padding: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 1.1rem;
   }
   
+  /* LAYOUT */
   .layout {
     display: grid;
-    gap: 1.5rem;
+    gap: 1.8rem;
   }
   
   .main {
     display: grid;
-    gap: 1.5rem;
+    gap: 1.8rem;
   }
   
   .sidebar {
     min-width: 0;
   }
   
-  .heroCard,
-  .promptCard,
-  .sidebarCard {
-    border: 1px solid rgba(var(--border), 0.92);
-    border-radius: 1rem;
-    background: rgb(var(--surface));
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-  }
-  
+  /* HERO CARD */
   .heroCard {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 1rem;
-    padding: 1.5rem;
+    justify-content: space-between;
+    padding: 1.5rem 1.6rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--border), 1);
+    background: rgb(var(--surface));
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
   }
   
   .heroTitle {
     margin: 0;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 800;
-    color: rgb(var(--text));
   }
   
   .heroMeta {
-    margin: 0.35rem 0 0;
+    margin: 0.3rem 0 0;
+    font-size: 0.88rem;
     color: rgba(var(--text), 0.68);
-    font-size: 0.95rem;
   }
   
   .exportButton {
     border: 2px solid #2563eb;
-    border-radius: 0.8rem;
+    border-radius: 0.75rem;
     background: transparent;
     color: #2563eb;
-    padding: 0.8rem 1.1rem;
-    font-size: 0.95rem;
+    padding: 0.75rem 1.2rem;
+    font-size: 0.9rem;
     font-weight: 700;
     cursor: pointer;
-    white-space: nowrap;
+    transition: all 150ms ease;
   }
   
+  .exportButton:hover {
+    background: rgba(37, 99, 235, 0.05);
+    transform: translateY(-1px);
+  }
+  
+  /* PROMPT CARD */
   .promptCard {
-    padding: 1.45rem;
+    padding: 1.6rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--border), 1);
+    background: rgb(var(--surface));
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
   }
   
   .promptTitle {
     margin: 0 0 0.6rem;
     font-size: 1rem;
     font-weight: 800;
-    color: rgb(var(--text));
   }
   
+  /* BULLETS */
   .bulletList {
-    margin: 0 0 1rem;
+    margin: 0 0 1.1rem;
     padding-left: 1rem;
     color: rgba(var(--text), 0.72);
-    line-height: 1.6;
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
   
+  /* ✅ ANSWER BOX (FIXED — NOW LOOKS LIKE REAL BOX) */
   .textarea {
     width: 100%;
-    min-height: 7.8rem;
+    min-height: 9rem;
     resize: vertical;
-    border: 1px solid rgba(var(--border), 1);
+    border: 1.5px solid rgba(var(--border), 1);
     border-radius: 0.8rem;
-    background: rgb(var(--surface));
-    padding: 1rem;
+    background: #ffffff;
+    padding: 1rem 1.05rem;
     font: inherit;
     color: rgb(var(--text));
     outline: none;
+  
+    /* subtle inner depth */
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.05);
   }
   
   .textarea::placeholder {
     color: rgba(var(--text), 0.4);
   }
   
+  /* blue focus like screenshot */
+  .textarea:focus {
+    border-color: rgba(var(--primary), 0.45);
+    box-shadow: 0 0 0 3px rgba(var(--primary), 0.08);
+  }
+  
+  /* SIDEBAR */
   .sidebarCard {
-    padding: 1.35rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--border), 1);
+    background: rgb(var(--surface));
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+    padding: 1.3rem;
+  }
+  
+  .sidebarHeading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
   }
   
   .sidebarTitle {
-    margin: 0 0 1rem;
+    margin: 0;
     font-size: 1rem;
     font-weight: 800;
-    color: rgb(var(--text));
   }
   
+  /* RECOMMENDATIONS */
   .recommendationList {
     display: grid;
-    gap: 1rem;
+    gap: 0.9rem;
   }
   
   .recommendationCard {
-    border-radius: 0.9rem;
-    background: rgba(var(--background), 0.55);
-    padding: 1rem;
+    background: rgba(var(--background), 0.6);
+    border-radius: 0.8rem;
+    padding: 0.9rem;
   }
   
   .recommendationHeader {
     display: flex;
     justify-content: space-between;
-    gap: 0.75rem;
     align-items: flex-start;
   }
   
   .recommendationTitle {
     margin: 0;
-    font-size: 0.98rem;
+    font-size: 0.9rem;
     font-weight: 700;
-    line-height: 1.45;
-    color: rgb(var(--text));
   }
   
   .score {
+    font-size: 0.8rem;
     color: rgba(var(--text), 0.6);
-    font-size: 0.85rem;
-    white-space: nowrap;
   }
   
   .recommendationText {
-    margin: 0.65rem 0 0;
-    color: rgba(var(--text), 0.68);
-    font-size: 0.92rem;
-    line-height: 1.55;
+    margin: 0.5rem 0 0;
+    font-size: 0.85rem;
+    color: rgba(var(--text), 0.7);
   }
   
+  /* TAGS */
   .tag {
-    display: inline-flex;
-    align-items: center;
-    margin-top: 0.8rem;
-    border-radius: 999px;
+    display: inline-block;
+    margin-top: 0.7rem;
     padding: 0.3rem 0.6rem;
-    background: rgba(var(--primary), 0.14);
-    color: rgb(var(--primary));
-    font-size: 0.74rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
     font-weight: 700;
   }
   
-  .state {
-    color: rgba(var(--text), 0.65);
-    font-size: 1rem;
+  .tagArticle {
+    background: rgba(59, 130, 246, 0.15);
+    color: #2563eb;
   }
   
+  .tagFilm {
+    background: rgba(168, 85, 247, 0.15);
+    color: #9333ea;
+  }
+  
+  .tagTheory {
+    background: rgba(245, 158, 11, 0.18);
+    color: #d97706;
+  }
+  
+  .tagBook {
+    background: rgba(34, 197, 94, 0.15);
+    color: #16a34a;
+  }
+  
+  /* RESPONSIVE */
   @media (min-width: 1024px) {
     .layout {
-      grid-template-columns: minmax(0, 1fr) 280px;
-      align-items: start;
+      grid-template-columns: 1fr 280px;
     }
   
     .sidebar {
@@ -194,6 +230,7 @@
     .heroCard {
       flex-direction: column;
       align-items: flex-start;
+      gap: 1rem;
     }
   
     .exportButton {

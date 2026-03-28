@@ -8,7 +8,7 @@ type Recommendation = {
   title: string;
   score: string;
   description: string;
-  tag: string;
+  tag: 'article' | 'film' | 'theory' | 'book';
 };
 
 type PromptSection = {
@@ -20,44 +20,51 @@ type PromptSection = {
 const recommendationsByTheory: Record<string, Recommendation[]> = {
   horror: [
     {
-      title: '"Men, Women, and Chain Saws"',
-      score: '90%',
-      description:
-        'Carol Clover\'s analysis of gender in horror films provides crucial context for horror theory.',
-      tag: 'book',
-    },
-    {
-      title: '"Get Out" and Social Horror',
-      score: '85%',
-      description:
-        'Jordan Peele\'s film demonstrates how horror can address contemporary racial anxieties.',
-      tag: 'film',
-    },
-    {
-      title: 'Intersectional Analysis',
-      score: '82%',
-      description:
-        'Consider how race and class intersect with gender in your analysis.',
-      tag: 'theory',
-    },
-    {
-      title: '"Portrait of a Lady on Fire"',
-      score: '88%',
-      description:
-        'This film offers an interesting counter-example to traditional male gaze cinema.',
-      tag: 'film',
-    },
-  ],
-  feminist: [
-    {
-      title: '"Visual Pleasure and Narrative Cinema"',
+      title: 'Recommended Reading: "Visual Pleasure and Narrative Cinema"',
       score: '95%',
       description:
         'Based on your interest in feminist theory, this foundational essay by Laura Mulvey would enhance your analysis.',
       tag: 'article',
     },
     {
-      title: '"Portrait of a Lady on Fire"',
+      title: 'Similar Film: "Portrait of a Lady on Fire"',
+      score: '88%',
+      description:
+        'This film offers an interesting counter-example to traditional male gaze cinema.',
+      tag: 'film',
+    },
+    {
+      title: 'Theory Connection: Intersectional Analysis',
+      score: '82%',
+      description:
+        'Consider how race and class intersect with gender in your analysis.',
+      tag: 'theory',
+    },
+    {
+      title: 'Essential Reading: "Men, Women, and Chain Saws"',
+      score: '90%',
+      description:
+        'Carol Clover\'s analysis of gender in horror films provides crucial context for horror theory.',
+      tag: 'book',
+    },
+    {
+      title: 'Comparative Analysis: "Get Out" and Social Horror',
+      score: '85%',
+      description:
+        'Jordan Peele\'s film demonstrates how horror can address contemporary racial anxieties.',
+      tag: 'film',
+    },
+  ],
+  feminist: [
+    {
+      title: 'Recommended Reading: "Visual Pleasure and Narrative Cinema"',
+      score: '95%',
+      description:
+        'Based on your selected theory, this foundational essay by Laura Mulvey would enhance your analysis.',
+      tag: 'article',
+    },
+    {
+      title: 'Similar Film: "Portrait of a Lady on Fire"',
       score: '88%',
       description:
         'This film offers an interesting counter-example to traditional male gaze cinema.',
@@ -80,14 +87,14 @@ const recommendationsByTheory: Record<string, Recommendation[]> = {
   ],
   psychoanalytic: [
     {
-      title: '"The Imaginary Signifier"',
+      title: 'Recommended Reading: "The Imaginary Signifier"',
       score: '93%',
       description:
         'Christian Metz connects psychoanalysis and cinema in a way that can deepen your reading of spectatorship.',
       tag: 'book',
     },
     {
-      title: '"Freud and the Cinema"',
+      title: 'Essential Reading: "Freud and the Cinema"',
       score: '87%',
       description:
         'A useful framework for reading repression, desire, and symbolic imagery in film.',
@@ -101,7 +108,7 @@ const recommendationsByTheory: Record<string, Recommendation[]> = {
       tag: 'theory',
     },
     {
-      title: '"Black Swan"',
+      title: 'Comparative Film: "Black Swan"',
       score: '86%',
       description:
         'A strong comparative text for thinking through fragmentation, doubling, and psychological instability.',
@@ -110,14 +117,14 @@ const recommendationsByTheory: Record<string, Recommendation[]> = {
   ],
   auteur: [
     {
-      title: '"Notes on the Auteur Theory"',
+      title: 'Recommended Reading: "Notes on the Auteur Theory"',
       score: '91%',
       description:
         'Andrew Sarris provides a foundational framework for understanding authorship in cinema.',
       tag: 'article',
     },
     {
-      title: '"A Certain Tendency of the French Cinema"',
+      title: 'Essential Reading: "A Certain Tendency of the French Cinema"',
       score: '88%',
       description:
         'Truffaut\'s essay offers historical grounding for auteur criticism and directorial vision.',
@@ -131,7 +138,7 @@ const recommendationsByTheory: Record<string, Recommendation[]> = {
       tag: 'theory',
     },
     {
-      title: '"Breathless"',
+      title: 'Comparative Film: "Breathless"',
       score: '86%',
       description:
         'A useful comparison for examining directorial style, formal innovation, and authorship.',
@@ -140,14 +147,14 @@ const recommendationsByTheory: Record<string, Recommendation[]> = {
   ],
   postmodern: [
     {
-      title: '"Postmodernism, or, The Cultural Logic of Late Capitalism"',
+      title: 'Recommended Reading: "Postmodernism, or, The Cultural Logic of Late Capitalism"',
       score: '94%',
       description:
         'Jameson\'s work helps frame parody, pastiche, irony, and fragmentation in your analysis.',
       tag: 'book',
     },
     {
-      title: '"Blade Runner"',
+      title: 'Comparative Film: "Blade Runner"',
       score: '89%',
       description:
         'A strong comparative film for exploring simulation, hybridity, and postmodern aesthetics.',
@@ -161,7 +168,7 @@ const recommendationsByTheory: Record<string, Recommendation[]> = {
       tag: 'theory',
     },
     {
-      title: '"Scream"',
+      title: 'Comparative Film: "Scream"',
       score: '86%',
       description:
         'A useful case study in self-reference, genre quotation, and postmodern play.',
@@ -286,27 +293,27 @@ function getAnalysisQuestions(theory: string): PromptSection[] | null {
       {
         title: 'Directorial Style and Vision',
         bullets: [
-          'What recurring stylistic choices define the director\'s voice?',
+          "What recurring stylistic choices define the director's voice?",
           'How do visual or narrative patterns reflect authorship?',
           'What distinguishes this film from others in the genre?',
         ],
         placeholder:
-          'Analyze the director\'s stylistic signature and authorial vision...',
+          "Analyze the director's stylistic signature and authorial vision...",
       },
       {
         title: 'Recurring Themes',
         bullets: [
-          'What themes connect this film to the director\'s broader body of work?',
+          "What themes connect this film to the director's broader body of work?",
           'How are familiar motifs or concerns expressed?',
           'What worldview seems to emerge?',
         ],
         placeholder:
-          'Examine recurring themes and concerns across the director\'s work...',
+          "Examine recurring themes and concerns across the director's work...",
       },
       {
         title: 'Creative Control and Collaboration',
         bullets: [
-          'How visible is the director\'s control over the film?',
+          "How visible is the director's control over the film?",
           'What role do genre, industry, or collaborators play?',
           'How does the film balance authorship with collaboration?',
         ],
@@ -387,10 +394,7 @@ export default function AnalysisWorkspace() {
   const [loading, setLoading] = useState(true);
   const [responses, setResponses] = useState<Record<string, string>>({});
 
-  const prompts = useMemo(
-    () => getAnalysisQuestions(selectedTheory),
-    [selectedTheory]
-  );
+  const prompts = useMemo(() => getAnalysisQuestions(selectedTheory), [selectedTheory]);
 
   const recommendations = useMemo(() => {
     const theoryId = normalizeTheoryId(selectedTheory);
@@ -456,12 +460,12 @@ export default function AnalysisWorkspace() {
 
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${film.title}-${formatTheoryName(selectedTheory)}-analysis.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${film.title}-${formatTheoryName(selectedTheory)}-analysis.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };
 
@@ -507,11 +511,7 @@ export default function AnalysisWorkspace() {
                 <p className={styles.heroMeta}>{titleLine}</p>
               </div>
 
-              <button
-                type="button"
-                className={styles.exportButton}
-                onClick={handleExport}
-              >
+              <button type="button" className={styles.exportButton} onClick={handleExport}>
                 Export Analysis
               </button>
             </section>
@@ -540,7 +540,12 @@ export default function AnalysisWorkspace() {
 
           <aside className={styles.sidebar}>
             <div className={styles.sidebarCard}>
-              <h2 className={styles.sidebarTitle}>Reading Recommendations</h2>
+              <div className={styles.sidebarHeading}>
+                <span className={styles.sidebarIcon} aria-hidden="true">
+                  💡
+                </span>
+                <h2 className={styles.sidebarTitle}>Reading Recommendations</h2>
+              </div>
 
               <div className={styles.recommendationList}>
                 {recommendations.map((item) => (
@@ -552,7 +557,19 @@ export default function AnalysisWorkspace() {
 
                     <p className={styles.recommendationText}>{item.description}</p>
 
-                    <span className={styles.tag}>{item.tag}</span>
+                    <span
+                      className={`${styles.tag} ${
+                        item.tag === 'article'
+                          ? styles.tagArticle
+                          : item.tag === 'film'
+                          ? styles.tagFilm
+                          : item.tag === 'theory'
+                          ? styles.tagTheory
+                          : styles.tagBook
+                      }`}
+                    >
+                      {item.tag}
+                    </span>
                   </article>
                 ))}
               </div>
