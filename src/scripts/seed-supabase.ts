@@ -29,6 +29,39 @@ type RawGame = {
   difficulty?: string;
 };
 
+type RawFlashcard = {
+  id: string;
+  term?: string;
+  definition?: string;
+  front?: string;
+  back?: string;
+  theoryId?: string;
+};
+
+type RawVocabulary = {
+  id: string;
+  term: string;
+  pronunciation?: string;
+  definition: string;
+  etymology?: string;
+  categories?: string[];
+  difficulty?: string;
+  relatedTerms?: string[];
+  relatedTheories?: string[];
+  usageExample?: string;
+  featured?: boolean;
+};
+
+type RawFilm = {
+  id: string;
+  title: string;
+  director?: string;
+  year?: number;
+  poster?: string;
+  description?: string;
+  relevantTheories?: string[];
+};
+
 dotenv.config({ path: '.env' });
 
 
@@ -46,12 +79,107 @@ if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
 // We use the service_role key for admin-level access required for a seeding script.
 const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
+// Helper function to create URL-safe slugs
+function createSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
 async function seedDatabase() {
   console.log('Starting database seed...');
 
-  // 1. Seed Quizzes and their Questions from JSON quizQuestions grouped by theoryId.
-  console.log('Seeding quizzes and questions...');
+  // 0. Seed Theories
+  console.log('Seeding theories...');
   const theories = ((rawData as { theories?: RawTheory[] }).theories ?? []) as RawTheory[];
+
+  if (theories.length === 0) {
+    console.warn('No theories found in raw_data.json.');
+  } else {
+    const theoriesPayload = theories.map((theory: any) => ({
+      title: theory.title ?? theory.name ?? '',
+      slug: createSlug(theory.title ?? theory.name ?? theory.id),
+      category: theory.category ?? null,
+      overview: theory.summary ?? null,
+      history: theory.description ?? null,
+      key_points: theory.keyPoints ?? [],
+      key_thinkers: theory.keyThinkers ?? [],
+      representative_films: theory.representativeFilms ?? [],
+      citations: theory.citations ?? [],
+      status: 'published',
+    }));
+
+    const { error: theoriesError } = await supabaseAdmin
+      .from('theories')
+      .upsert(theoriesPayload, { onConflict: 'slug' });
+
+    if (theoriesError) {
+      console.error('Error seeding theories:', theoriesError.message);
+    } else {
+      console.log(`Inserted/updated ${theoriesPayload.length} theories.`);
+    }
+  }
+
+  // 1. Seed Vocabulary (complete set)
+  console.log('\nSeeding vocabulary...');
+  const vocabulary = ((rawData as { vocabulary?: RawVocabulary[] }).vocabulary ?? []) as RawVocabulary[];
+
+  if (vocabulary.length === 0) {
+    console.warn('No vocabulary found in raw_data.json.');
+  } else {
+    const vocabPayload = vocabulary.map((term: RawVocabulary) => ({
+      term: term.term,
+      definition: term.definition,
+      example_usage: term.usageExample ?? null,
+      difficulty: term.difficulty ?? 'beginner',
+      tags: term.categories ?? [],
+      related_terms: term.relatedTerms ?? [],
+      related_theories: term.relatedTheories ?? [],
+      featured: term.featured ?? false,
+      status: 'published',
+    }));
+
+    const { error: vocabError } = await supabaseAdmin
+      .from('vocabulary_terms')
+      .upsert(vocabPayload, { onConflict: 'term' });
+
+    if (vocabError) {
+      console.error('Error seeding vocabulary:', vocabError.message);
+    } else {
+      console.log(`Inserted/updated ${vocabPayload.length} vocabulary terms.`);
+    }
+  }
+
+  // 2. Seed Films
+  console.log('\nSeeding films...');
+  const films = ((rawData as { films?: RawFilm[] }).films ?? []) as RawFilm[];
+
+  if (films.length === 0) {
+    console.warn('No films found in raw_data.json.');
+  } else {
+    const filmsPayload = films.map((film: RawFilm) => ({
+      title: film.title,
+      director: film.director ?? null,
+      year: film.year ?? null,
+      synopsis: film.description ?? null,
+    }));
+
+    const { error: filmsError } = await supabaseAdmin
+      .from('films')
+      .insert(filmsPayload);
+
+    if (filmsError) {
+      console.error('Error seeding films:', filmsError.message);
+    } else {
+      console.log(`Inserted ${filmsPayload.length} films.`);
+    }
+  }
+
+  // 3. Seed Quizzes and their Questions from JSON quizQuestions grouped by theoryId.
+  console.log('\nSeeding quizzes and questions...');
   const allQuestions =
     ((rawData as { quizQuestions?: RawQuizQuestion[] }).quizQuestions ?? []) as RawQuizQuestion[];
 
@@ -205,7 +333,52 @@ async function seedDatabase() {
     }
   }
 
-  // 2. Seed Games (optional)
+  // 4. Seed Flashcards into vocabulary_terms (used by the web app flashcard page)
+  console.log('\nSeeding flashcards...');
+  const flashcards = ((rawData as { flashcards?: RawFlashcard[] }).flashcards ?? []) as RawFlashcard[];
+
+  if (flashcards.length === 0) {
+    console.warn('No flashcards found in raw_data.json.');
+  } else {
+    const flashcardsPayload = flashcards
+      .map((card) => {
+        const term = (card.term ?? card.front ?? '').trim();
+        const definition = (card.definition ?? card.back ?? '').trim();
+
+        if (!term || !definition) {
+          return null;
+        }
+
+        return {
+          term,
+          definition,
+          example_usage: null,
+          difficulty: 'beginner',
+          tags: ['flashcards'] as string[],
+          related_terms: [] as string[],
+          related_theories: card.theoryId ? [card.theoryId] : [],
+          featured: false,
+          status: 'published',
+        };
+      })
+      .filter((row) => row !== null);
+
+    if (flashcardsPayload.length > 0) {
+      const { error: flashcardsError } = await supabaseAdmin
+        .from('vocabulary_terms')
+        .upsert(flashcardsPayload, { onConflict: 'term' });
+
+      if (flashcardsError) {
+        console.error('Error seeding flashcards into vocabulary_terms:', flashcardsError.message);
+      } else {
+        console.log(`Inserted/updated ${flashcardsPayload.length} flashcards.`);
+      }
+    } else {
+      console.warn('No valid flashcards to seed (missing term/definition).');
+    }
+  }
+
+  // 5. Seed Games (optional)
   console.log('\nSeeding games...');
   const games = ((rawData as { games?: RawGame[] }).games ?? []) as RawGame[];
 
