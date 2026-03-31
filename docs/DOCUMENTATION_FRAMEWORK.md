@@ -60,11 +60,7 @@ docs/
 ├── CONTENT_MANAGEMENT.md      # Admin content workflow
 ├── GIT_STRATEGY.md            # Development practices
 ├── TECHNICAL_DEBT.md          # Known issues & improvements
-├── TEAM_WORKFLOW.md           # Team processes
-├── PROGRESS_REPO_CURRENT.md   # Current sprint snapshot
-├── PROGRESS.md                # Long-term roadmap
-└── branches/
-    └── TEMPLETE.md            # Template for branch documentation
+└── TEAM_WORKFLOW.md           # Team processes
 ```
 
 ### Document Roles
