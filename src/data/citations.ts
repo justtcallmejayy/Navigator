@@ -1,4 +1,4 @@
-import { Citation } from '../../../w26-filmstheory/Navigator-fork/src/types';
+import type { Citation } from '../types';
 
 export const citations: Citation[] = [
   // FEMINIST THEORY - Enhanced with more comprehensive citations
