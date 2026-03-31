@@ -1,5 +1,5 @@
-import { NavLink } from 'react-router-dom';
 import { User } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 import styles from './NavBar.module.scss';
 
 const links = [
