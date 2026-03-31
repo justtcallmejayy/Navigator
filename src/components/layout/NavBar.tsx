@@ -34,10 +34,6 @@ export default function NavBar() {
         </nav>
 
         <div className={styles.actions}>
-          <button type="button" className={styles.feedbackButton}>
-            Beta Feedback
-          </button>
-
           <NavLink to="/admin/login" className={styles.loginButton}>
             <User size={16} />
             <span>Login</span>
