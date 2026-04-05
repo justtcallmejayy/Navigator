@@ -487,7 +487,22 @@ export default function AnalysisWorkspace() {
         <div className={styles.container}>
           <div className={styles.comingSoonCard}>
             <div className={styles.comingSoonIcon} aria-hidden="true">
-              🗎
+              <svg
+                width="52"
+                height="52"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <path d="M14 2v6h6" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <line x1="10" y1="9" x2="8" y2="9" />
+              </svg>
             </div>
 
             <h1 className={styles.comingSoonTitle}>Template Coming Soon</h1>
@@ -543,9 +558,7 @@ export default function AnalysisWorkspace() {
                   className={styles.textarea}
                   placeholder={prompt.placeholder}
                   value={responses[prompt.title] ?? ''}
-                  onChange={(event) =>
-                    handleResponseChange(prompt.title, event.target.value)
-                  }
+                  onChange={(event) => handleResponseChange(prompt.title, event.target.value)}
                 />
               </section>
             ))}
