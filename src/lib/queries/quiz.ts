@@ -22,28 +22,25 @@ function isStringArray(value: unknown): value is string[] {
   return Array.isArray(value) && value.every((item) => typeof item === 'string');
 }
 
-function parseCorrectAnswerId(
-  rawCorrectAnswer: unknown,
-  fallbackOptionIds: string[],
-  fallbackByLetter: Record<string, string>
-): string {
-  if (typeof rawCorrectAnswer === 'string') {
-    if (fallbackOptionIds.includes(rawCorrectAnswer)) {
-      return rawCorrectAnswer;
-    }
+function getCorrectIndex(rawCorrectAnswer: unknown): number {
+  if (typeof rawCorrectAnswer !== 'string') return 0;
 
-    const numberMatch = rawCorrectAnswer.match(/(\d+)$/);
-    if (numberMatch) {
-      const optionIndex = Number(numberMatch[1]) - 1;
-      const optionId = fallbackOptionIds[optionIndex];
-      if (optionId) return optionId;
-    }
+  const value = rawCorrectAnswer.trim().toLowerCase();
 
-    const byLetter = fallbackByLetter[rawCorrectAnswer.toUpperCase()];
-    if (byLetter) return byLetter;
+  if (value === 'a') return 0;
+  if (value === 'b') return 1;
+  if (value === 'c') return 2;
+  if (value === 'd') return 3;
+
+  const numberMatch = value.match(/(\d+)$/);
+  if (numberMatch) {
+    const parsed = Number(numberMatch[1]) - 1;
+    if (Number.isFinite(parsed) && parsed >= 0 && parsed <= 3) {
+      return parsed;
+    }
   }
 
-  return fallbackOptionIds[0] ?? '';
+  return 0;
 }
 
 export async function fetchQuizQuestions(
@@ -83,13 +80,15 @@ export async function fetchQuizQuestions(
 
   const quizIdToTopic = new Map<string, string>(
     quizzes
-      .filter((quiz): quiz is { id: string; topic: string } =>
-        typeof quiz.id === 'string' && typeof quiz.topic === 'string'
+      .filter(
+        (quiz): quiz is { id: string; topic: string } =>
+          typeof quiz.id === 'string' && typeof quiz.topic === 'string',
       )
-      .map((quiz) => [quiz.id, quiz.topic])
+      .map((quiz) => [quiz.id, quiz.topic]),
   );
 
   const quizIds = [...quizIdToTopic.keys()];
+
   const { data: questionRows, error: questionRowsError } = await supabase
     .from('quiz_questions')
     .select('*')
@@ -106,51 +105,52 @@ export async function fetchQuizQuestions(
       const mappedTheoryId = quizId ? (quizIdToTopic.get(quizId) ?? 'general') : 'general';
       const questionId = typeof record.id === 'string' ? record.id : crypto.randomUUID();
 
-      let options = [] as { id: string; text: string }[];
-      const legacyOptions = record.options;
+      let rawOptions: string[] = [];
 
-      if (isStringArray(legacyOptions)) {
-        options = legacyOptions.slice(0, 4).map((text, index) => ({
-          id: `${questionId}-${index + 1}`,
-          text,
-        }));
+      if (isStringArray(record.options)) {
+        rawOptions = record.options.slice(0, 4);
       } else {
         const modernOptions = [
           record.option_a,
           record.option_b,
           record.option_c,
           record.option_d,
-        ].map((value) => (typeof value === 'string' ? value : ''));
+        ]
+          .filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
+          .slice(0, 4);
 
-        options = modernOptions.map((text, index) => ({
-          id: `${questionId}-${index + 1}`,
-          text,
-        }));
+        rawOptions = modernOptions;
       }
 
-      const fallbackByLetter: Record<string, string> = {
-        A: options[0]?.id ?? '',
-        B: options[1]?.id ?? '',
-        C: options[2]?.id ?? '',
-        D: options[3]?.id ?? '',
-      };
-      const correctAnswerRaw = record.correct_answer ?? record.correct_option;
-      const correctAnswer = parseCorrectAnswerId(
-        correctAnswerRaw,
-        options.map((option) => option.id),
-        fallbackByLetter
-      );
+      if (rawOptions.length === 0) return null;
+
+      const baseOptions = rawOptions.map((text, index) => ({
+        id: `opt-${index}`,
+        text,
+      }));
+
+      const correctIndex = getCorrectIndex(record.correct_answer ?? record.correct_option);
+      const correctOption = baseOptions[correctIndex] ?? baseOptions[0];
+
+      const shuffledOptions = shuffle ? shuffleItems(baseOptions) : baseOptions;
+
+      const correctAnswer =
+        shuffledOptions.find((option) => option.text === correctOption.text)?.id ??
+        shuffledOptions[0]?.id ??
+        '';
 
       return {
         id: questionId,
         theoryId: mappedTheoryId,
         question: typeof record.question_text === 'string' ? record.question_text : '',
-        options,
+        options: shuffledOptions,
         correctAnswer,
         explanation: typeof record.explanation === 'string' ? record.explanation : '',
       };
     })
-    .filter((question) => question.question.length > 0 && question.options.length > 0);
+    .filter((question): question is QuizQuestion => {
+      return Boolean(question && question.question.length > 0 && question.options.length > 0);
+    });
 
   const selected = shuffle ? shuffleItems(normalizedQuestions) : [...normalizedQuestions];
 
@@ -191,7 +191,7 @@ export async function fetchQuizStats(): Promise<{
   const theoryCount = new Set(
     (quizzes ?? [])
       .map((quiz) => quiz.topic)
-      .filter((topic): topic is string => typeof topic === 'string' && topic.length > 0)
+      .filter((topic): topic is string => typeof topic === 'string' && topic.length > 0),
   ).size;
 
   return {
