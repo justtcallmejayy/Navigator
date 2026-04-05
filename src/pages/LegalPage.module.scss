@@ -1,0 +1,70 @@
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 5.5rem var(--space-md) var(--space-xxl);
+}
+
+.hero {
+  margin-bottom: 2rem;
+}
+
+.title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-family-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+}
+
+.meta {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(139, 148, 158, 0.3);
+  border-radius: var(--border-radius-lg);
+  padding: clamp(1.25rem, 2vw, 2rem);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
+}
+
+.section {
+  margin-bottom: 1.6rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.sectionTitle {
+  margin: 0 0 0.65rem;
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  line-height: 1.25;
+  color: var(--color-text-primary);
+}
+
+.text {
+  margin: 0 0 0.65rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.list {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-top: 4.5rem;
+  }
+}
