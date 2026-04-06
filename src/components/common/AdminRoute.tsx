@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { supabase } from '../../lib/supabase/client';
+import { AdminLayout } from '../admin';
 import ErrorState from './ErrorState';
 import Loading from './Loading';
 
@@ -66,5 +67,5 @@ export default function AdminRoute({ children }: AdminRouteProps) {
     return <ErrorState message="Your account is signed in but is not allowed to access admin." />;
   }
 
-  return <>{children}</>;
+  return <AdminLayout>{children}</AdminLayout>;
 }

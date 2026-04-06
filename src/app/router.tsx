@@ -3,6 +3,10 @@ import { AdminRoute } from '../components/common';
 import { AppLayout } from '../components/layout';
 import AdminDashboard from '../pages/AdminDashboard';
 import AdminLogin from '../pages/AdminLogin';
+import AdminTheories from '../pages/AdminTheories';
+import AdminVocabulary from '../pages/AdminVocabulary';
+import AdminQuizzes from '../pages/AdminQuizzes';
+import AdminAnalytics from '../pages/AdminAnalytics';
 import AnalysisToolkit from '../pages/AnalysisToolkit';
 import AnalysisWorkspace from '../pages/AnalysisWorkspace';
 import FlashcardsPage from '../pages/FlashcardsPage';
@@ -26,12 +30,52 @@ export const router = createBrowserRouter([
       { path: '/quiz/:theoryId', element: <QuizPage /> },
       { path: '/analysis', element: <AnalysisToolkit /> },
       { path: '/analysis/:filmId', element: <AnalysisWorkspace /> },
+      { path: '/privacy', element: <Home /> }, // Placeholder
+      { path: '/terms', element: <Home /> }, // Placeholder
+      { path: '/license', element: <Home /> }, // Placeholder
       { path: '/admin/login', element: <AdminLogin /> },
+    ],
+  },
+  {
+    path: '/admin',
+    children: [
       {
-        path: '/admin',
+        path: '',
         element: (
           <AdminRoute>
             <AdminDashboard />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'theories',
+        element: (
+          <AdminRoute>
+            <AdminTheories />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'vocabulary',
+        element: (
+          <AdminRoute>
+            <AdminVocabulary />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'quizzes',
+        element: (
+          <AdminRoute>
+            <AdminQuizzes />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'analytics',
+        element: (
+          <AdminRoute>
+            <AdminAnalytics />
           </AdminRoute>
         ),
       },
