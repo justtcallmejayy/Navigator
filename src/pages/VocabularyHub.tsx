@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { trackEngagementEvent } from '../lib/engagement';
 import { fetchVocabularyTerms, type VocabularyTerm } from '../lib/queries/vocabulary';
 import styles from './VocabularyHub.module.scss';
 
@@ -43,6 +44,17 @@ export default function VocabularyHub() {
       document.body.style.overflow = '';
     };
   }, [selectedTerm]);
+
+  useEffect(() => {
+    if (!selectedTerm?.id) return;
+
+    void trackEngagementEvent({
+      eventType: 'viewed_vocabulary',
+      relatedType: 'vocabulary',
+      relatedId: selectedTerm.id,
+      metadata: { term: selectedTerm.term },
+    });
+  }, [selectedTerm?.id, selectedTerm?.term]);
 
   const termOfTheDay = useMemo(() => {
     if (terms.length === 0) return null;

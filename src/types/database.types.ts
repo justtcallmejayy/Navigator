@@ -602,7 +602,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_admin_analytics_summary: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          published_theories: number
+          draft_theories: number
+          published_vocabulary: number
+          draft_vocabulary: number
+          published_quizzes: number
+          draft_quizzes: number
+          unique_users: number
+          total_engagement_events: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
