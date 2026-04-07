@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchVocabularyTerms, type VocabularyTerm } from '../lib/queries/vocabulary';
 import styles from './VocabularyHub.module.scss';
 
 export default function VocabularyHub() {
+  const navigate = useNavigate();
   const [terms, setTerms] = useState<VocabularyTerm[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -362,10 +364,18 @@ export default function VocabularyHub() {
 
               <div className={styles.modalFooter}>
                 <div className={styles.modalActions}>
-                  <button type="button" className={styles.primaryAction}>
+                  <button
+                    type="button"
+                    className={styles.primaryAction}
+                    onClick={() => navigate('/flashcards')}
+                  >
                     Study with Flashcards
                   </button>
-                  <button type="button" className={styles.secondaryAction}>
+                  <button
+                    type="button"
+                    className={styles.secondaryAction}
+                    onClick={() => navigate('/theory')}
+                  >
                     Explore Theories
                   </button>
                 </div>
