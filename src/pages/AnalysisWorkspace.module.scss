@@ -1,328 +1,345 @@
 .page {
-    min-height: 100vh;
-    background: rgb(var(--background));
-    padding: 2.6rem 1rem 3.2rem;
-  }
-  
-  .container {
-    width: min(1180px, 100%);
-    margin: 0 auto;
-  }
-  
-  .backButton {
-    border: 0;
-    background: transparent;
-    color: rgba(var(--text), 0.72);
-    font-size: 0.9rem;
-    font-weight: 700;
-    line-height: 1;
-    cursor: pointer;
-    padding: 0;
-    margin: 0 0 1.1rem;
-  }
-  
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      1200px 600px at 50% -10%,
+      rgba(59, 130, 246, 0.08),
+      transparent
+    ),
+    rgb(var(--background));
+  padding: 2.6rem 1rem 3.2rem;
+}
+
+.container {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+/* BACK BUTTON */
+
+.backButton {
+  border: 0;
+  background: transparent;
+  color: rgba(148, 163, 184, 0.8);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 1.2rem;
+  transition: all 150ms ease;
+}
+
+.backButton:hover {
+  color: #e2e8f0;
+  transform: translateX(-2px);
+}
+
+/* LAYOUT */
+
+.layout {
+  display: grid;
+  gap: 1.8rem;
+}
+
+.main {
+  display: grid;
+  gap: 1.8rem;
+}
+
+.sidebar {
+  min-width: 0;
+}
+
+/* HERO */
+
+.heroCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 1.5rem;
+  border-radius: 1rem;
+
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.heroTitle {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.heroMeta {
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+/* BUTTON */
+
+.exportButton {
+  border: 1.5px solid #3b82f6;
+  background: transparent;
+  color: #60a5fa;
+  padding: 0.7rem 1.2rem;
+  border-radius: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition: all 150ms ease;
+}
+
+.exportButton:hover {
+  background: rgba(59, 130, 246, 0.1);
+  transform: translateY(-1px);
+}
+
+/* PROMPT CARDS */
+
+.promptCard {
+  padding: 1.5rem;
+  border-radius: 1.1rem;
+  background: rgba(15, 23, 42, 0.58);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.promptTitle {
+  margin-bottom: 0.65rem;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: #e2e8f0;
+}
+
+.bulletList {
+  margin-bottom: 1rem;
+  padding-left: 1.1rem;
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: rgba(226, 232, 240, 0.82);
+}
+
+/* TEXTAREA (FIXED PROPERLY) */
+
+.textarea {
+  width: 100%;
+  min-height: 10.5rem;
+  resize: vertical;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 1rem;
+
+  background: rgba(15, 23, 42, 0.72);
+  color: #e5edf8;
+
+  padding: 1.1rem 1.15rem;
+  font-family: var(--font-family-base);
+  font-size: 0.97rem;
+  line-height: 1.75;
+  letter-spacing: -0.01em;
+
+  outline: none;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+    0 6px 18px rgba(0, 0, 0, 0.18);
+
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.textarea::placeholder {
+  color: rgba(148, 163, 184, 0.58);
+}
+
+.textarea:hover {
+  border-color: rgba(148, 163, 184, 0.28);
+  background: rgba(15, 23, 42, 0.76);
+}
+
+.textarea:focus {
+  border-color: rgba(96, 165, 250, 0.55);
+  background: rgba(15, 23, 42, 0.82);
+
+  box-shadow:
+    0 0 0 4px rgba(59, 130, 246, 0.12),
+    0 14px 28px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  transform: translateY(-1px);
+}
+/* SIDEBAR */
+
+.sidebarCard {
+  padding: 1.3rem;
+  border-radius: 1rem;
+
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+}
+
+.sidebarHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sidebarTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #f1f5f9;
+}
+
+/* RECOMMENDATIONS */
+
+.recommendationList {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.recommendationCard {
+  padding: 0.9rem;
+  border-radius: 0.8rem;
+
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.recommendationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recommendationTitle {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.score {
+  font-size: 0.8rem;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.recommendationText {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: rgba(226, 232, 240, 0.8);
+}
+
+/* TAGS */
+
+.tag {
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.tagArticle {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+}
+
+.tagFilm {
+  background: rgba(168, 85, 247, 0.2);
+  color: #c084fc;
+}
+
+.tagTheory {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+}
+
+.tagBook {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+
+/* COMING SOON */
+
+.comingSoonCard {
+  width: min(720px, 100%);
+  margin: 2rem auto;
+  padding: 2.5rem;
+  text-align: center;
+
+  border-radius: 1.2rem;
+
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.comingSoonIcon {
+  margin-bottom: 1rem;
+  color: #60a5fa;
+}
+
+.comingSoonTitle {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.comingSoonText {
+  margin: 0.8rem 0 1.5rem;
+  color: rgba(226, 232, 240, 0.85);
+}
+
+.primaryButton {
+  background: linear-gradient(135deg, #4f7cff, #3b82f6);
+  border: none;
+  color: white;
+  padding: 0.8rem 1.4rem;
+  border-radius: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+
+  box-shadow: 0 10px 24px rgba(59, 130, 246, 0.3);
+}
+
+.primaryButton:hover {
+  transform: translateY(-1px);
+}
+
+/* RESPONSIVE */
+
+@media (min-width: 1024px) {
   .layout {
-    display: grid;
-    gap: 1.8rem;
+    grid-template-columns: 1fr 300px;
   }
-  
-  .main {
-    display: grid;
-    gap: 1.8rem;
-  }
-  
+
   .sidebar {
-    min-width: 0;
+    position: sticky;
+    top: 6rem;
   }
-  
-  .heroCard,
-  .promptCard {
-    border: 1px solid rgba(var(--border), 0.9);
-    border-radius: 1rem;
-    background: rgb(var(--surface));
-    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
-  }
-  
+}
+
+@media (max-width: 720px) {
   .heroCard {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1.55rem 1.6rem;
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .heroTitle {
-    margin: 0;
-    color: rgb(var(--text));
-    font-size: 1.08rem;
-    font-weight: 800;
-    line-height: 1.25;
-  }
-  
-  .heroMeta {
-    margin: 0.35rem 0 0;
-    color: rgba(var(--text), 0.68);
-    font-size: 0.88rem;
-    line-height: 1.4;
-  }
-  
+
   .exportButton {
-    border: 2px solid #2563eb;
-    border-radius: 0.78rem;
-    background: transparent;
-    color: #2563eb;
-    padding: 0.8rem 1.2rem;
-    font-size: 0.94rem;
-    font-weight: 700;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
-  }
-  
-  .exportButton:hover {
-    background: rgba(37, 99, 235, 0.05);
-    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.08);
-    transform: translateY(-1px);
-  }
-  
-  .promptCard {
-    padding: 1.6rem;
-  }
-  
-  .promptTitle {
-    margin: 0 0 0.65rem;
-    color: rgb(var(--text));
-    font-size: 1rem;
-    font-weight: 800;
-    line-height: 1.3;
-  }
-  
-  .bulletList {
-    margin: 0 0 1rem;
-    padding-left: 1rem;
-    color: rgba(var(--text), 0.72);
-    font-size: 0.96rem;
-    line-height: 1.55;
-  }
-  
-  .textarea {
     width: 100%;
-    min-height: 9rem;
-    resize: vertical;
-    border: 1.5px solid rgba(var(--border), 1);
-    border-radius: 0.8rem;
-    background: #ffffff;
-    padding: 1rem 1.05rem;
-    font: inherit;
-    color: rgb(var(--text));
-    outline: none;
-    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.05);
   }
-  
-  .textarea::placeholder {
-    color: rgba(var(--text), 0.4);
-  }
-  
-  .textarea:focus {
-    border-color: rgba(var(--primary), 0.45);
-    box-shadow: 0 0 0 3px rgba(var(--primary), 0.08);
-  }
-  
-  .sidebarCard {
-    border: 1px solid rgba(var(--border), 0.9);
-    border-radius: 1rem;
-    background: rgb(var(--surface));
-    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
-    padding: 1.35rem 1.35rem 1.45rem;
-  }
-  
-  .sidebarHeading {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.65rem;
-    margin-bottom: 1.1rem;
-  }
-  
-  .sidebarIcon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.95rem;
-    line-height: 1;
-    margin-top: 0.1rem;
-    color: #f59e0b;
-  }
-  
-  .sidebarTitle {
-    margin: 0;
-    color: rgb(var(--text));
-    font-size: 0.98rem;
-    font-weight: 800;
-    line-height: 1.45;
-  }
-  
-  .recommendationList {
-    display: grid;
-    gap: 0.95rem;
-  }
-  
-  .recommendationCard {
-    border-radius: 0.9rem;
-    background: rgba(var(--background), 0.56);
-    padding: 0.95rem 0.95rem 0.9rem;
-  }
-  
-  .recommendationHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 0.65rem;
-  }
-  
-  .recommendationTitle {
-    margin: 0;
-    color: rgb(var(--text));
-    font-size: 0.94rem;
-    font-weight: 700;
-    line-height: 1.45;
-  }
-  
-  .score {
-    color: rgba(var(--text), 0.58);
-    font-size: 0.82rem;
-    white-space: nowrap;
-  }
-  
-  .recommendationText {
-    margin: 0.65rem 0 0;
-    color: rgba(var(--text), 0.68);
-    font-size: 0.88rem;
-    line-height: 1.45;
-  }
-  
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    margin-top: 0.8rem;
-    border-radius: 999px;
-    padding: 0.32rem 0.62rem;
-    font-size: 0.72rem;
-    font-weight: 700;
-    line-height: 1;
-    text-transform: lowercase;
-  }
-  
-  .tagArticle {
-    background: rgba(59, 130, 246, 0.14);
-    color: #2563eb;
-  }
-  
-  .tagFilm {
-    background: rgba(168, 85, 247, 0.14);
-    color: #9333ea;
-  }
-  
-  .tagTheory {
-    background: rgba(245, 158, 11, 0.16);
-    color: #d97706;
-  }
-  
-  .tagBook {
-    background: rgba(34, 197, 94, 0.14);
-    color: #16a34a;
-  }
-  
-  .comingSoonCard {
-    width: min(825px, 100%);
-    margin: 1.55rem auto 0;
-    border: 1px solid rgba(var(--border), 0.92);
-    border-radius: 1rem;
-    background: rgb(var(--surface));
-    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
-    padding: 2.8rem 2rem 2.9rem;
-    text-align: center;
-  }
-  
-  .comingSoonIcon {
-    font-size: 3.05rem;
-    line-height: 1;
-    color: rgba(var(--text), 0.35);
-    margin-bottom: 0.9rem;
-  }
-  
-  .comingSoonTitle {
-    margin: 0;
-    color: rgb(var(--text));
-    font-size: 1.95rem;
-    font-weight: 800;
-    line-height: 1.2;
-  }
-  
-  .comingSoonText {
-    margin: 0.8rem 0 1.7rem;
-    color: rgba(var(--text), 0.72);
-    font-size: 1.1rem;
-    line-height: 1.5;
-  }
-  
-  .primaryButton {
-    border: 0;
-    border-radius: 0.75rem;
-    background: #2563eb;
-    color: #fff;
-    padding: 0.82rem 1.35rem;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.18);
-    transition: transform 150ms ease, box-shadow 150ms ease;
-  }
-  
-  .primaryButton:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.22);
-  }
-  
-  .state {
-    color: rgba(var(--text), 0.65);
-    font-size: 1rem;
-  }
-  
-  @media (min-width: 1024px) {
-    .layout {
-      grid-template-columns: minmax(0, 1fr) 278px;
-      align-items: start;
-    }
-  
-    .sidebar {
-      position: sticky;
-      top: 6.1rem;
-    }
-  }
-  
-  @media (max-width: 720px) {
-    .page {
-      padding-top: 2rem;
-    }
-  
-    .heroCard {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .exportButton {
-      width: 100%;
-    }
-  
-    .comingSoonCard {
-      padding: 2.2rem 1.2rem;
-    }
-  
-    .comingSoonTitle {
-      font-size: 1.6rem;
-    }
-  
-    .comingSoonText {
-      font-size: 1rem;
-    }
-  }
+}

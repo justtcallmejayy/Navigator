@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { AdminRoute } from '../components/common';
 import { AppLayout } from '../components/layout';
+import AcademicLicense from '../pages/AcademicLicense';
 import AdminDashboard from '../pages/AdminDashboard';
 import AdminLogin from '../pages/AdminLogin';
 import AdminTheories from '../pages/AdminTheories';
@@ -12,7 +13,9 @@ import AnalysisWorkspace from '../pages/AnalysisWorkspace';
 import FlashcardsPage from '../pages/FlashcardsPage';
 import Home from '../pages/Home';
 import InteractiveLearning from '../pages/InteractiveLearning';
+import PrivacyPolicy from '../pages/PrivacyPolicy';
 import QuizPage from '../pages/QuizPage';
+import TermsOfService from '../pages/TermsOfService';
 import TheoryDetail from '../pages/TheoryDetail';
 import TheoryLibrary from '../pages/TheoryLibrary';
 import VocabularyHub from '../pages/VocabularyHub';
@@ -30,9 +33,9 @@ export const router = createBrowserRouter([
       { path: '/quiz/:theoryId', element: <QuizPage /> },
       { path: '/analysis', element: <AnalysisToolkit /> },
       { path: '/analysis/:filmId', element: <AnalysisWorkspace /> },
-      { path: '/privacy', element: <Home /> }, // Placeholder
-      { path: '/terms', element: <Home /> }, // Placeholder
-      { path: '/license', element: <Home /> }, // Placeholder
+      { path: '/privacy', element: <PrivacyPolicy /> },
+      { path: '/terms', element: <TermsOfService /> },
+      { path: '/license', element: <AcademicLicense /> },
       { path: '/admin/login', element: <AdminLogin /> },
     ],
   },
