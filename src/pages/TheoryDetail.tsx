@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ErrorState, Loading } from '../components/common';
+import { trackEngagementEvent } from '../lib/engagement';
 import { fetchTheoryBySlug } from '../lib/queries/theories';
 import styles from './TheoryDetail.module.scss';
 
@@ -12,6 +14,17 @@ export default function TheoryDetail() {
     queryFn: () => fetchTheoryBySlug(slug),
     enabled: Boolean(slug),
   });
+
+  useEffect(() => {
+    if (!data?.id) return;
+
+    void trackEngagementEvent({
+      eventType: 'viewed_theory',
+      relatedType: 'theory',
+      relatedId: data.id,
+      metadata: { slug },
+    });
+  }, [data?.id, slug]);
 
   if (isLoading) return <Loading label="Loading theory..." />;
   if (error) return <ErrorState message="Theory could not be loaded." />;

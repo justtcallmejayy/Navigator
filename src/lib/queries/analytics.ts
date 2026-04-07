@@ -33,47 +33,38 @@ export function useAnalyticsSummary() {
   return useQuery({
     queryKey: ['analytics_summary'],
     queryFn: async () => {
-      // Query each table to build summary
-      const theoriesResult = await supabase.from('theories').select('status');
-      const vocabularyResult = await supabase.from('vocabulary_terms').select('status');
-      const engagementResult = await supabase
-        .from('user_engagement')
-        .select('user_id, event_type');
+      const { data, error } = await supabase.rpc('get_admin_analytics_summary');
 
-      const theories = theoriesResult.data || [];
-      const vocabulary = vocabularyResult.data || [];
-      const engagement = engagementResult.data || [];
+      if (error) throw error;
 
-      const publishedTheories = theories.filter(
-        (t: { status: string }) => t.status === 'published'
-      ).length;
-      const draftTheories = theories.filter(
-        (t: { status: string }) => t.status === 'draft'
-      ).length;
-      const publishedVocab = vocabulary.filter(
-        (v: { status: string }) => v.status === 'published'
-      ).length;
-      const draftVocab = vocabulary.filter(
-        (v: { status: string }) => v.status === 'draft'
-      ).length;
+      const row = Array.isArray(data) ? data[0] : data;
 
-      const uniqueUsers = new Set(
-        engagement
-          .map((e: { user_id: string | null }) => e.user_id)
-          .filter((id): id is string => id !== null)
-      ).size;
+      if (!row) {
+        return {
+          published_theories: 0,
+          draft_theories: 0,
+          published_vocabulary: 0,
+          draft_vocabulary: 0,
+          published_quizzes: 0,
+          draft_quizzes: 0,
+          unique_users: 0,
+          total_engagement_events: 0,
+        } as AnalyticsSummary;
+      }
 
       return {
-        published_theories: publishedTheories,
-        draft_theories: draftTheories,
-        published_vocabulary: publishedVocab,
-        draft_vocabulary: draftVocab,
-        published_quizzes: 0,
-        draft_quizzes: 0,
-        unique_users: uniqueUsers,
-        total_engagement_events: engagement.length,
+        published_theories: Number(row.published_theories ?? 0),
+        draft_theories: Number(row.draft_theories ?? 0),
+        published_vocabulary: Number(row.published_vocabulary ?? 0),
+        draft_vocabulary: Number(row.draft_vocabulary ?? 0),
+        published_quizzes: Number(row.published_quizzes ?? 0),
+        draft_quizzes: Number(row.draft_quizzes ?? 0),
+        unique_users: Number(row.unique_users ?? 0),
+        total_engagement_events: Number(row.total_engagement_events ?? 0),
       } as AnalyticsSummary;
     },
+    staleTime: 30_000,
+    refetchInterval: 60_000,
   });
 }
 
@@ -90,6 +81,8 @@ export function useUserEngagementEvents(limit = 50) {
       if (error) throw error;
       return (data || []) as UserEngagementEvent[];
     },
+    staleTime: 15_000,
+    refetchInterval: 30_000,
   });
 }
 
@@ -180,6 +173,8 @@ export function useMostViewedContent() {
 
       return [...theoryData, ...vocabData];
     },
+    staleTime: 30_000,
+    refetchInterval: 60_000,
   });
 }
 
@@ -201,5 +196,7 @@ export function useEventStats() {
         count,
       }));
     },
+    staleTime: 30_000,
+    refetchInterval: 60_000,
   });
 }
