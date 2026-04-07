@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { supabase } from '../../lib/supabase/client';
+import { setAdminRequestHeader, supabase } from '../../lib/supabase/client';
 import { AdminLayout } from '../admin';
 import ErrorState from './ErrorState';
 import Loading from './Loading';
@@ -39,13 +39,21 @@ export default function AdminRoute({ children }: AdminRouteProps) {
 
       if (!active) return;
       if (!adminUserId) {
+        setAdminRequestHeader(null);
         setAccessState('unauthenticated');
         return;
       }
 
+      setAdminRequestHeader(adminUserId);
+
       // Verify the admin user still exists in admin_users table
       const isAdmin = await hasAdminAccess(adminUserId);
       if (!active) return;
+
+      if (!isAdmin) {
+        sessionStorage.removeItem('admin_user_id');
+        setAdminRequestHeader(null);
+      }
 
       setAccessState(isAdmin ? 'authorized' : 'unauthorized');
     };

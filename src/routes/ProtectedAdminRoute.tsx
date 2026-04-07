@@ -1,8 +1,8 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { supabase } from '../lib/supabase/client';
 import { AdminLayout } from '../components/admin';
 import Loading from '../components/common/Loading';
+import { supabase } from '../lib/supabase/client';
 
 type ProtectedAdminRouteProps = {
   children: ReactNode;

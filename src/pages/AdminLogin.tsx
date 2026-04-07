@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
-import { supabase } from '../lib/supabase/client';
+import { setAdminRequestHeader, supabase } from '../lib/supabase/client';
 import styles from './AdminLogin.module.scss';
 
 async function hasAdminAccess(userId: string): Promise<boolean> {
@@ -31,22 +31,28 @@ export default function AdminLogin() {
     setLoading(true);
     setError('');
 
-    if (!userId.trim()) {
+    const normalizedUserId = userId.trim();
+
+    if (!normalizedUserId) {
       setError('UUID is required');
       setLoading(false);
       return;
     }
 
-    const isAdmin = await hasAdminAccess(userId.trim());
+    // Add UUID header so RLS policies can validate admin access.
+    setAdminRequestHeader(normalizedUserId);
+
+    const isAdmin = await hasAdminAccess(normalizedUserId);
 
     if (!isAdmin) {
+      setAdminRequestHeader(null);
       setLoading(false);
       setError('This UUID is not registered as an admin.');
       return;
     }
 
-    // Store admin session  
-    sessionStorage.setItem('admin_user_id', userId.trim());
+    // Store admin session
+    sessionStorage.setItem('admin_user_id', normalizedUserId);
     navigate('/admin', { replace: true });
   };
 
