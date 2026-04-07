@@ -1,6 +1,7 @@
+import { BarChart3, BookOpen, FileText, HelpCircle, LogOut, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { LogOut, Menu, X, BarChart3, BookOpen, FileText, HelpCircle } from 'lucide-react';
+import { setAdminRequestHeader } from '../../lib/supabase/client';
 import styles from './AdminLayout.module.scss';
 
 type AdminLayoutProps = {
@@ -14,6 +15,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   const handleLogout = () => {
     sessionStorage.removeItem('admin_user_id');
+    setAdminRequestHeader(null);
     navigate('/admin/login', { replace: true });
   };
 

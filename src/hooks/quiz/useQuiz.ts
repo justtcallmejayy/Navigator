@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { QuizQuestion } from '../../types';
 
 const getStorageKey = (theoryId: string) => `quizState_${theoryId}`;
@@ -63,7 +63,7 @@ export const useQuiz = (theoryId: string, questions: QuizQuestion[]) => {
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setCurrentQuestionIndex((prev) => prev + 1);
       setSelectedAnswer(null);
     } else {
       setIsFinished(true);
@@ -76,7 +76,7 @@ export const useQuiz = (theoryId: string, questions: QuizQuestion[]) => {
 
     setSelectedAnswer(answerId);
     if (answerId === currentQuestion.correctAnswer) {
-      setScore(score + 1);
+      setScore((prev) => prev + 1);
     }
   };
 

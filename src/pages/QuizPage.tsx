@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ChevronLeft } from 'lucide-react';
+import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import ErrorState from '../components/common/ErrorState';
 import Loading from '../components/common/Loading';
@@ -75,8 +75,13 @@ function QuizRunner({ theoryId, questions, onTryAgain }: QuizRunnerProps) {
           <ChevronLeft size={20} />
           Back to Hub
         </Link>
-        <div className={styles.progress}>
-          Question {currentQuestionIndex + 1} of {totalQuestions}
+        <div className={styles.quizMeta}>
+          <div className={styles.progress}>
+            Question {currentQuestionIndex + 1} of {totalQuestions}
+          </div>
+          <div className={styles.scoreBadge}>
+            Score: {score}
+          </div>
         </div>
       </div>
 
@@ -85,6 +90,8 @@ function QuizRunner({ theoryId, questions, onTryAgain }: QuizRunnerProps) {
           question={currentQuestion}
           selectedAnswer={selectedAnswer}
           isCorrect={isCorrect}
+          currentQuestionIndex={currentQuestionIndex}
+          totalQuestions={totalQuestions}
           onSelectAnswer={handleSelectAnswer}
           onNext={handleNextQuestion}
         />
